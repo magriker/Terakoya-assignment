@@ -3,10 +3,17 @@ body {
   text-align: center;
 }
 
-.count {
+.count,
+.typedNumber {
   margin: 0;
   font-weight: bold;
   color: #888;
+}
+
+.typedWrong {
+  margin: 0;
+  font-weight: bold;
+  color: red;
 }
 
 .wrap {
