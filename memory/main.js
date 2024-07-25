@@ -1,23 +1,31 @@
 const btn = document.querySelector(".startBtn");
 const cardsContainer = document.querySelector(".cards-contaner");
 
-const creatCards = function () {
+btn.addEventListener("click", creatCards);
+
+function creatCards() {
   let firstLine = [];
   let secondLine = [];
+  let merge = [];
 
   for (let i = 1; i <= 5; i++) {
     firstLine.push(i);
     secondLine.push(i);
   }
 
-  shaffleArray(firstLine);
-  shaffleArray(secondLine);
-};
+  merge = [...shaffleArray(firstLine), ...shaffleArray(secondLine)];
+
+  merge.map((m) => {
+    const temp = document.createElement("div");
+    temp.classList.add("card");
+    temp.textContent = m;
+    cardsContainer.appendChild(temp);
+  });
+}
 
 const shaffleArray = function (array) {
   let shuffledArray = [];
   let usedIndexes = [];
-
   let i = 0;
 
   while (i < array.length) {
@@ -33,6 +41,5 @@ const shaffleArray = function (array) {
   return shuffledArray;
 };
 
-function creatDom() {}
-
-creatCards();
+let hitcards = [];
+let preValue = [];

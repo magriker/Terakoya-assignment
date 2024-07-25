@@ -1,5 +1,11 @@
 .card {
   height: 50px;
+  background-color: lightblue;
+  border: 1px solid;
+}
+
+.cardBack {
+  height: 50px;
   background-color: red;
   border: 1px solid;
 }

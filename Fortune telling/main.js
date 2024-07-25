@@ -5,20 +5,30 @@ const getrandomValue = (number) => {
   return Math.floor(Math.random() * number + 1);
 };
 
+let myMap = new Map([
+  [1, "大吉"],
+  [2, "吉"],
+  [3, "小吉"],
+]);
+
+
 const getOmikuji = () => {
   const random = getrandomValue(5);
 
-  if (random === 1) {
-    return (result.textContent = `大吉`);
-  } else if (random === 2) {
-    return (result.textContent = `吉`);
-  } else if (random === 3) {
-    return (result.textContent = `小吉`);
-  } else if (random === 4) {
-    return (result.textContent = `凶`);
-  } else if (random === 5) {
-    return (result.textContent = `大凶`);
-  }
+return console.log(myMap.);
+  
+
+  // if (random === 1) {
+  //   return (result.textContent = `大吉`);
+  // } else if (random === 2) {
+  //   return (result.textContent = `吉`);
+  // } else if (random === 3) {
+  //   return (result.textContent = `小吉`);
+  // } else if (random === 4) {
+  //   return (result.textContent = `凶`);
+  // } else if (random === 5) {
+  //   return (result.textContent = `大凶`);
+  // }
 };
 
 const getOmikuji2 = () => {
