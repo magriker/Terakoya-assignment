@@ -2,6 +2,7 @@ const btn = document.querySelector(".startBtn");
 const cardsContainer = document.querySelector(".cards-contaner");
 
 btn.addEventListener("click", creatCards);
+cardsContainer.addEventListener("click", checkCards);
 
 function creatCards() {
   let firstLine = [];
@@ -41,5 +42,17 @@ const shaffleArray = function (array) {
   return shuffledArray;
 };
 
+function checkCards(e) {
+  hitcards.push(e.target.textContent);
+
+  if (hitcards.length >= 2) {
+    console.log(hitcards);
+    hitcards = [];
+  }
+}
+
+function changeColor(e) {
+  e.target.classList.add("cardBack");
+}
 let hitcards = [];
 let preValue = [];
