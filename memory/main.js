@@ -43,13 +43,17 @@ const shaffleArray = function (array) {
   console.log(shuffledArray);
   return shuffledArray;
 };
-
+let falseNumber = 0;
 let hitcards = [];
 let correctEl = [];
 let targetEl = [];
 let mistake = [];
 
 function checkCards(e) {
+  console.log(falseNumber);
+  if (falseNumber) {
+    return e.preventDefault();
+  }
   checkArray();
   addNumber(e);
 
@@ -70,19 +74,21 @@ function checkCards(e) {
     console.log(targetEl);
   } else if (hitcards.length === 2 && hitcards[0] !== hitcards[1]) {
     console.log("違う");
+    falseNumber = 1;
+
     setTimeout(function () {
       targetEl.map((e) => e.classList.remove("cardBack"));
       targetEl = [];
       mistake.push(1);
+      falseNumber = 0;
       if (mistake.length === 3) {
         const gameOver = confirm("Gameover!!\nClick OK!");
         if (gameOver) {
           window.location.reload();
         }
+        console.log(mistake);
+        console.log(targetEl);
       }
-
-      console.log(mistake);
-      console.log(targetEl);
     }, 1500);
   }
   // if (hitcards.length <= 2) {
