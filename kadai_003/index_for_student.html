@@ -35,31 +35,60 @@
     <main>
       <!-- ************************************************ カールセル開始 -->
       <!-- <div id="myCarousel" class="carousel slide" data-bs-ride="carousel"> -->
-      <div id="myCarousel" class="carousel slide" data-bs-ride="">
+      <div
+        id="carouselExampleInterval"
+        class="carousel slide carousel-fade"
+        data-bs-ride="carousel"
+      >
         <!-- <div class="carousel-inner"> -->
         <div class="carousel-inner">
           <!-- <div class="carousel-item active"> -->
-          <div class="carousel-item active">
+          <div class="carousel-item active" data-bs-interval="10000">
             <img src="img/top_1.jpg" alt="サンプル画像1" />
-            <div class="container">
-              <!-- <div class="carousel-caption"> -->
-              <div class="carousel-caption d-none d-md-block">
-                <h1>Example headline.</h1>
-                <p>
-                  Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-                  Donec id elit non mi porta gravida at eget metus. Nullam id
-                  dolor id nibh ultricies vehicula ut id elit.
-                </p>
-                <!-- <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p> -->
-                <p>
-                  <a class="btn btn-primary btn-lg" href="#" role="button"
-                    >Sign up today</a
-                  >
-                </p>
-              </div>
+          </div>
+          <div class="carousel-item" data-bs-interval="20000">
+            <img src="img/top_2.jpg" alt="サンプル画像1" />
+          </div>
+          <div class="carousel-item" data-bs-interval="30000">
+            <img src="img/top_3.jpg" alt="サンプル画像1" />
+          </div>
+
+          <div class="container">
+            <!-- <div class="carousel-caption"> -->
+            <div class="carousel-caption d-none d-md-block">
+              <h1>Example headline.</h1>
+              <p>
+                Cras justo odio, dapibus ac facilisis in, egestas eget quam.
+                Donec id elit non mi porta gravida at eget metus. Nullam id
+                dolor id nibh ultricies vehicula ut id elit.
+              </p>
+              <!-- <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p> -->
+              <p>
+                <a class="btn btn-primary btn-lg" href="#" role="button"
+                  >Sign up today</a
+                >
+              </p>
             </div>
           </div>
         </div>
+        <!-- <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleInterval"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleInterval"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button> -->
       </div>
       <!-- ************************************************ カールセル終了 -->
       <!-- <div class="container marketing"> -->
