@@ -1,0 +1,166 @@
+/* ----------------------------------------------- 共通 */
+html,
+body {
+  overflow-x: hidden;
+}
+
+body {
+  color: #000000;
+  font-family: "Noto Sans JP", sans-serif;
+  padding-bottom: 0;
+}
+
+p {
+  line-height: 2em;
+  font-weight: 100;
+  font-style: normal;
+  font-size: 14px;
+}
+
+/* ----------------------------------------------- ナビゲーションバー */
+.navbar_brand_logo {
+  /* サイズを32pxの正方形へ変更 */
+  width: 32px;
+  height: 32px;
+
+  /* imgはインライン要素なのでインラインブロックに設定 */
+  display: inline-block;
+
+  /* "SAMURAI KITCHEN" 文字との空白を15pxに設定 */
+  margin-right: 15px;
+}
+
+.my_navbar_brand,
+.my_nav_link {
+  /* フォントサイズを16pxに設定 */
+  font-size: 16px;
+
+  /* フォントをserif体に設定 */
+  font-family: "Lora", serif;
+
+  /* フォント色を黒色に設定 */
+  color: #000000 !important;
+}
+
+.navbar-toggler {
+  padding: 0 !important;
+  border: none;
+}
+
+/* Bootstrapのボタンに初期設定されている周囲のborder（枠線）を消す */
+.navbar-toggler {
+  padding: 0 !important;
+  border: none;
+}
+
+/* ハンバーガーボタンがチェック状態である（押されている）とき、閉じるボタン（×）を表示する */
+#hamburger_btn_check:checked ~ .hamburger_btn .btn_close {
+  display: block;
+}
+
+/* ハンバーガーボタンがチェック状態である（押されている）とき、ハンバーガーボタンを表示しない */
+#hamburger_btn_check:checked ~ .hamburger_btn .btn_open {
+  display: none;
+}
+
+/* 最初に表示した時は、閉じるボタン（×）は表示しない */
+.btn_close {
+  display: none;
+}
+
+/* ハンバーガーボタンが押されているかを判断するためのチェックボックスは隠す */
+#hamburger_btn_check {
+  display: none;
+}
+
+/* ----------------------------------------------- カールセル */
+
+.my_carousel_caption {
+  font-size: 52px;
+
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+
+  color: #fff;
+
+  text-align: center;
+  font-family: "Lora", serif;
+  line-height: 1.5em;
+}
+
+.carousel-item {
+  height: 32rem;
+}
+
+.carousel-item > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  height: 32rem;
+}
+
+.my_carousel_caption::before {
+  content: url(../img/logoSymbol_White.png);
+  display: block;
+}
+
+@media screen and (max-width: 375px) {
+  .my_carousel_caption {
+    font-size: 27px;
+  }
+}
+
+/* ----------------------------------------------- アバウト */
+
+.section_title {
+  font-size: 36px;
+
+  font-weight: 600;
+}
+
+.about::after {
+  content: "私たちについて";
+}
+
+.section_title::after {
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 16px 0 16px;
+  width: 100px;
+  border-bottom: solid 1px #000000;
+}
+
+.about_us_bg {
+  background-color: #ffe6a5;
+}
+
+/* ----------------------------------------------- ギャラリー */
+.gallery::after {
+  content: "ギャラリー";
+  margin: 0 auto 0;
+}
+
+/* ----------------------------------------------- メニュー */
+.menu::after {
+  content: "メニュー";
+  margin: 0 auto 0;
+}
+
+.menu_title {
+  font-size: 18px;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.menu_price {
+  font-size: 20px;
+  font-weight: 400;
+  font-family: "Lora", serif;
+}
+/* ----------------------------------------------- レビュー */
+
+/* ----------------------------------------------- アクセス */
+
+/* ----------------------------------------------- フッター */
