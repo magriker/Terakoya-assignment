@@ -1,5 +1,6 @@
 function App2() {
-  return <div>Hello react</div>;
+  //
+  return <div>こんにちはReact</div>;
 }
 
 export default App2;

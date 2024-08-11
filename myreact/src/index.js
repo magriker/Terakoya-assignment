@@ -6,6 +6,9 @@ import reportWebVitals from "./reportWebVitals";
 import App2 from "./App2";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
+// setInterval(root.render(<p>現在時刻:{new Date().toLocaleString()}</p>), 1000);
+
 root.render(
   <React.StrictMode>
     <App />
