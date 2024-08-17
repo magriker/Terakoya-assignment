@@ -1,8 +1,20 @@
 import logo from "./logo.svg";
 import "./App.css";
 
-function App() {
-  return <div>Hello app</div>;
+const test = "taro";
+const isTaro = true;
+
+function App({ test }) {
+  return (
+    <>
+      {/* <div className="test">
+        Hello App {test === "taro" ? "そうだよ" : "ちがうよ"}{" "}
+      </div>
+      <div>{isTaro && "aaa"}</div> */}
+
+      <button>{test}</button>
+    </>
+  );
 }
 
 export default App;

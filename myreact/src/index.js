@@ -9,10 +9,14 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 // setInterval(root.render(<p>現在時刻:{new Date().toLocaleString()}</p>), 1000);
 
+const test = "ボタン";
+const title = "現在時刻";
+const type = "time";
+
 root.render(
   <React.StrictMode>
-    <App />
-    <App2></App2>
+    <App test={test} />
+    <App2 title={title} type={type}></App2>
   </React.StrictMode>
 );
 
