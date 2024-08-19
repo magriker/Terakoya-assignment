@@ -12,8 +12,7 @@ function App2({ title, type }) {
         console.log(d.toLocaleTimeString());
         break;
       default:
-        console.log(d.toLocaleString);
-
+        console.log(d.toLocaleString());
         break;
     }
   };

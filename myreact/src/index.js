@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import App2 from "./App2";
+import StateBasic from "./StateBasic";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -17,6 +18,7 @@ root.render(
   <React.StrictMode>
     <App test={test} />
     <App2 title={title} type={type}></App2>
+    <StateBasic init={0}></StateBasic>
   </React.StrictMode>
 );
 
