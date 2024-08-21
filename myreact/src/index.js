@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import App2 from "./App2";
 import StateBasic from "./StateBasic";
+import FortuneTelling from "./FortuneTeling";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -13,12 +14,14 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 const test = "ボタン";
 const title = "現在時刻";
 const type = "time";
+const btName = "占う";
 
 root.render(
   <React.StrictMode>
-    <App test={test} />
+    <FortuneTelling btName={btName}></FortuneTelling>
+    {/* <App test={test} />
     <App2 title={title} type={type}></App2>
-    <StateBasic init={0}></StateBasic>
+    <StateBasic init={0}></StateBasic> */}
   </React.StrictMode>
 );
 

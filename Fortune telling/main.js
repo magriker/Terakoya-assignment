@@ -11,12 +11,10 @@ let myMap = new Map([
   [3, "小吉"],
 ]);
 
-
 const getOmikuji = () => {
   const random = getrandomValue(5);
 
-return console.log(myMap.);
-  
+  return console.log(myMap);
 
   // if (random === 1) {
   //   return (result.textContent = `大吉`);
