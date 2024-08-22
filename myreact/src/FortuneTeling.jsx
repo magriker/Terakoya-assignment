@@ -4,11 +4,7 @@ const getrandomValue = (number) => {
   return Math.floor(Math.random() * number + 1);
 };
 
-const checkFortune = (num) => {
-  return myMap.get(num);
-};
-
-const myMap = new Map([
+export const FORTUNE_MAP = new Map([
   [1, "大吉"],
   [2, "吉"],
   [3, "小吉"],
@@ -17,19 +13,20 @@ const myMap = new Map([
 ]);
 
 const FortuneTelling = ({ btName }) => {
-  const [count, setCount] = useState(0);
-  console.log(count);
+  const [fortuneNumber, setFortuneNumber] = useState(0);
+  console.log("test2");
 
+  const fortuneLabel = FORTUNE_MAP.get(fortuneNumber);
   const handleClick = () => {
     const random = getrandomValue(5);
-
-    setCount(random);
+    setFortuneNumber(random);
+    console.log("test");
   };
 
   return (
     <>
       <button onClick={handleClick}>{btName}</button>
-      <p>{checkFortune(count)}</p>
+      <p>{fortuneLabel}</p>
     </>
   );
 };
