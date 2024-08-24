@@ -12,7 +12,9 @@ export const FORTUNE_MAP = new Map([
   [5, "大凶"],
 ]);
 
-const FortuneTelling = ({ btName }) => {
+const deleat = () => {};
+
+const FortuneTelling_2 = ({ btName }) => {
   //   const [fortuneNumber, setFortuneNumber] = useState(0);
   //   console.log("test2");
 
@@ -30,11 +32,14 @@ const FortuneTelling = ({ btName }) => {
       <button onClick={handleClick}>{btName}</button>
       <ul>
         {fortuneLabels.map((label, index) => (
-          <li key={index}>{label}</li>
+          <li key={index} style={label === "大吉" ? { color: "red" } : null}>
+            {label}&nbsp;&nbsp;
+            <button>削除</button>
+          </li>
         ))}
       </ul>
     </>
   );
 };
 
-export default FortuneTelling;
+export default FortuneTelling_2;
