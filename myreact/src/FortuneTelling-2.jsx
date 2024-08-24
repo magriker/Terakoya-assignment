@@ -12,8 +12,6 @@ export const FORTUNE_MAP = new Map([
   [5, "大凶"],
 ]);
 
-const deleat = () => {};
-
 const FortuneTelling_2 = ({ btName }) => {
   //   const [fortuneNumber, setFortuneNumber] = useState(0);
   //   console.log("test2");
@@ -27,6 +25,12 @@ const FortuneTelling_2 = ({ btName }) => {
     setFortuneLabel([...fortuneLabels, label]);
   };
 
+  const deleteLabel = (indexNum) => {
+    setFortuneLabel((fortuneLabels) =>
+      fortuneLabels.filter((_, index) => index !== indexNum)
+    );
+  };
+
   return (
     <>
       <button onClick={handleClick}>{btName}</button>
@@ -34,7 +38,7 @@ const FortuneTelling_2 = ({ btName }) => {
         {fortuneLabels.map((label, index) => (
           <li key={index} style={label === "大吉" ? { color: "red" } : null}>
             {label}&nbsp;&nbsp;
-            <button>削除</button>
+            <button onClick={() => deleteLabel(index)}>削除</button>
           </li>
         ))}
       </ul>
