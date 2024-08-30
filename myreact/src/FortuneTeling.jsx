@@ -13,20 +13,26 @@ export const FORTUNE_MAP = new Map([
 ]);
 
 const FortuneTelling = ({ btName }) => {
-  const [fortuneNumber, setFortuneNumber] = useState(0);
-  console.log("test2");
+  //   const [fortuneNumber, setFortuneNumber] = useState(0);
+  //   console.log("test2");
 
-  const fortuneLabel = FORTUNE_MAP.get(fortuneNumber);
+  const [fortuneLabels, setFortuneLabel] = useState([]);
+
   const handleClick = () => {
     const random = getrandomValue(5);
-    setFortuneNumber(random);
-    console.log("test");
+    const label = FORTUNE_MAP.get(random);
+    console.log("labels:", ...fortuneLabels);
+    setFortuneLabel([...fortuneLabels, label]);
   };
 
   return (
     <>
       <button onClick={handleClick}>{btName}</button>
-      <p>{fortuneLabel}</p>
+      <ul>
+        {fortuneLabels.map((label, index) => (
+          <li key={index}>{label}</li>
+        ))}
+      </ul>
     </>
   );
 };
