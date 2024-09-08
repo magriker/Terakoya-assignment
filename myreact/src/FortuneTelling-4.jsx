@@ -1,9 +1,10 @@
 import { useState } from "react";
 import FortuneTellingCounter from "./FortuneTellingCounter";
+import FortuneList from "./FortuneList";
 
 const dayjs = require("dayjs");
 
-const getrandomValue = (number) => {
+export const getrandomValue = (number) => {
   return Math.floor(Math.random() * number + 1);
 };
 
@@ -16,9 +17,6 @@ export const FORTUNE_MAP = new Map([
 ]);
 
 const FortuneTelling_4 = ({ btName }) => {
-  //   const [fortuneNumber, setFortuneNumber] = useState(0);
-  //   console.log("test2");
-
   const [fortuneLabels, setFortuneLabel] = useState([]);
   const [fortuneTime, setFortuneTime] = useState([]);
 
@@ -33,39 +31,15 @@ const FortuneTelling_4 = ({ btName }) => {
     setFortuneTime([...fortuneTime, formatedTime]);
   };
 
-  const deleteLabel = (indexNum) => {
-    setFortuneLabel((fortuneLabels) =>
-      fortuneLabels.filter((_, index) => index !== indexNum)
-    );
-  };
-
-  const updateFortune = (index) => {
-    const newLabel = FORTUNE_MAP.get(getrandomValue(5));
-    const newLabels = [...fortuneLabels].map((nl, i) =>
-      i === index ? (nl = newLabel) : nl
-    );
-    setFortuneLabel(newLabels);
-  };
-
   return (
     <>
       <button onClick={handleClick}>{btName}</button>
       <FortuneTellingCounter count={fortuneLabels}></FortuneTellingCounter>
-      <ul>
-        {fortuneLabels.map((label, index) => (
-          <li key={index}>
-            <span style={label === "大吉" ? { color: "red" } : null}>
-              {label}
-            </span>
-            &nbsp;&nbsp;
-            {fortuneTime[index]}
-            &nbsp;&nbsp;
-            <button onClick={() => updateFortune(index)}>更新</button>
-            &nbsp;&nbsp;
-            <button onClick={() => deleteLabel(index)}>削除</button>
-          </li>
-        ))}
-      </ul>
+      <FortuneList
+        fortuneLabels={fortuneLabels}
+        fortuneTime={fortuneTime}
+        setFortuneLabel={setFortuneLabel}
+      ></FortuneList>
     </>
   );
 };
