@@ -1,8 +1,11 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useState } from "react";
 
 const Form = () => {
+  const [formlist, setFormlist] = useState([]);
+
   const schema = yup.object().shape({
     fullName: yup.string().required("Your name should be full name"),
     age: yup.number().positive().integer().min(18).required(),
@@ -23,7 +26,8 @@ const Form = () => {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
+    setFormlist([...formlist, data]);
+    console.log(formlist);
   };
 
   return (
@@ -60,8 +64,11 @@ const Form = () => {
         <p>{errors.confirmPassword?.message}</p>
         <input type="submit"></input>
       </form>
+      {formlist.map((list, index) => (
+        <div key={index}>{list.fullName}</div>
+      ))}
     </>
   );
 };
 
-export default Form_1;
+export default Form;
