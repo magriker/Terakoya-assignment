@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-const Form_1 = () => {
+const Form = () => {
   const schema = yup.object().shape({
     fullName: yup.string().required("Your name should be full name"),
     age: yup.number().positive().integer().min(18).required(),
