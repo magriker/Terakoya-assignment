@@ -19,12 +19,12 @@ const FormDiray = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = (data, e) => {
     setDiaryList([...diaryList, data]);
     console.log(diaryList);
 
-    // e.preventDefault();
-    // e.target.reset();
+    e.preventDefault();
+    e.target.reset();
   };
 
   return (
