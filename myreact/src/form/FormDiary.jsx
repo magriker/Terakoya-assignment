@@ -7,7 +7,7 @@ const FormDiray = () => {
   const [diaryList, setDiaryList] = useState([]);
 
   const schema = yup.object().shape({
-    title: yup.string().required("タイトルを入れてください"),
+    title: yup.string().required("タイトが必要です。"),
     memo: yup.string(),
   });
 
