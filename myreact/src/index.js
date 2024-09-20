@@ -12,6 +12,7 @@ import FortuneTelling_4 from "./FortuneTelling-4";
 
 import Form from "./form/FormYup_practice";
 import FormDiray from "./form/FormDiary";
+import MuiTest from "./mui/Mui_test";
 
 const dayjs = require("dayjs");
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -25,7 +26,8 @@ const btName = "占う";
 
 root.render(
   <React.StrictMode>
-    <FormDiray></FormDiray>
+    <MuiTest></MuiTest>
+    {/* <FormDiray></FormDiray> */}
     {/* <Form></Form> */}
     {/* <FortuneTelling_4 btName={btName}></FortuneTelling_4> */}
     {/* <App test={test} />
