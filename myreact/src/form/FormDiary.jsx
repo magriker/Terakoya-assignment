@@ -7,32 +7,6 @@ import * as yup from "yup";
 import { useState } from "react";
 
 const FormDiray = () => {
-  const [diaryList, setDiaryList] = useState([]);
-
-  const schema = yup.object().shape({
-    title: yup.string().required("タイトルが必要です。"),
-    memo: yup.string(),
-  });
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      date: "",
-      title: "",
-      memo: "",
-    },
-    resolver: yupResolver(schema),
-  });
-
-  const onSubmit = (data) => {
-    setDiaryList([...diaryList, data]);
-    reset();
-  };
-
   const container = css`
     width: 50%;
     margin: 5rem auto;
@@ -96,6 +70,35 @@ const FormDiray = () => {
   const errorStyle = css`
     color: red;
   `;
+
+  const diary = window.localStorage.getItem("diary");
+  console.log(JSON.parse(diary));
+  const [diaryList, setDiaryList] = useState(diary ? JSON.parse(diary) : []);
+
+  const schema = yup.object().shape({
+    title: yup.string().required("タイトルが必要です。"),
+    memo: yup.string(),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      date: "",
+      title: "",
+      memo: "",
+    },
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmit = (data) => {
+    setDiaryList([...diaryList, data]);
+    window.localStorage.setItem("diary", JSON.stringify([...diaryList, data]));
+    reset();
+  };
 
   return (
     <div css={container}>
