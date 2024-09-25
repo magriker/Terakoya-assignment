@@ -26,8 +26,8 @@ const btName = "占う";
 
 root.render(
   <React.StrictMode>
-    <MuiTest></MuiTest>
-    {/* <FormDiray></FormDiray> */}
+    {/* <MuiTest></MuiTest> */}
+    <FormDiray></FormDiray>
     {/* <Form></Form> */}
     {/* <FortuneTelling_4 btName={btName}></FortuneTelling_4> */}
     {/* <App test={test} />
