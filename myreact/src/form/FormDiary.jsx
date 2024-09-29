@@ -84,7 +84,7 @@ const FormDiray = () => {
   `;
 
   const diary = window.localStorage.getItem("diary");
-  console.log(JSON.parse(diary));
+  // console.log(JSON.parse(diary));
   const [diaryList, setDiaryList] = useState(diary ? JSON.parse(diary) : []);
 
   const schema = yup.object().shape({
