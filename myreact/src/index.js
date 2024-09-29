@@ -9,10 +9,11 @@ import FortuneTelling from "./FortuneTeling";
 import FortuneTelling_2 from "./FortuneTelling-2";
 import FortuneTelling_3 from "./FortuneTelling-3";
 import FortuneTelling_4 from "./FortuneTelling-4";
-
+import QueryMeigen from "./form/ReactQuery";
 import Form from "./form/FormYup_practice";
 import FormDiray from "./form/FormDiary";
 import MuiTest from "./mui/Mui_test";
+import { Query, QueryClient, QueryClientProvider } from "react-query";
 
 const dayjs = require("dayjs");
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -23,11 +24,17 @@ const test = "ボタン";
 const title = "現在時刻";
 const type = "time";
 const btName = "占う";
+const cli = new QueryClient();
 
 root.render(
   <React.StrictMode>
+    {
+      <QueryClientProvider client={cli}>
+        <QueryMeigen></QueryMeigen>
+      </QueryClientProvider>
+    }
     {/* <MuiTest></MuiTest> */}
-    <FormDiray></FormDiray>
+    {/* <FormDiray></FormDiray> */}
     {/* <Form></Form> */}
     {/* <FortuneTelling_4 btName={btName}></FortuneTelling_4> */}
     {/* <App test={test} />

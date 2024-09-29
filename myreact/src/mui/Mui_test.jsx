@@ -12,39 +12,43 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import NoteIcon from "@mui/icons-material/Note";
 import FormDiray from "../form/FormDiary";
+import Form_1 from "../form/Form_1";
+import QueryMeigen from "../form/ReactQuery";
+import { Query, QueryClient, QueryClientProvider } from "react-query";
+
+const cli = new QueryClient();
 
 export default function AnchorTemporaryDrawer() {
-  const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
-  });
+  const [menue, setMenue] = React.useState(null);
 
-  const toggleDrawer = (anchor, open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
+  // const [state, setState] = React.useState({
+  //   top: false,
+  //   left: false,
+  //   bottom: false,
+  //   right: false,
+  // });
+  const [state, setState] = React.useState(false);
 
-    setState({ ...state, [anchor]: open });
+  const ANCHOR = "left";
+
+  const toggleDrawer = () => {
+    setState(!state);
   };
 
   const list = (anchor) => (
     <Box
       sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
+      onClick={toggleDrawer}
+      onKeyDown={toggleDrawer}
     >
       <List>
-        {["Diary"].map((text, index) => (
+        {["Diary", "Memo", "Pokemon"].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton
               onClick={() => {
-                return <FormDiray></FormDiray>;
+                setMenue(text);
+                console.log(text);
               }}
             >
               <ListItemIcon>
@@ -59,19 +63,22 @@ export default function AnchorTemporaryDrawer() {
   );
 
   return (
-    <div>
-      {["left"].map((anchor) => (
-        <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
-          <Drawer
-            anchor={anchor}
-            open={state[anchor]}
-            onClose={toggleDrawer(anchor, false)}
-          >
-            {list(anchor)}
+    <>
+      <div>
+        <React.Fragment>
+          <Button onClick={toggleDrawer}>Menue</Button>
+          <Drawer anchor={ANCHOR} open={state} onClose={toggleDrawer}>
+            {list(ANCHOR)}
           </Drawer>
         </React.Fragment>
-      ))}
-    </div>
+        {menue === "Diary" && <FormDiray></FormDiray>}
+        {menue === "Memo" && <Form_1></Form_1>}
+        {menue === "Pokemon" && (
+          <QueryClientProvider client={cli}>
+            <QueryMeigen></QueryMeigen>
+          </QueryClientProvider>
+        )}
+      </div>
+    </>
   );
 }

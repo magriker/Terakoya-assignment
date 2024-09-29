@@ -17,7 +17,7 @@ export default function BasicTable({ diaryList }) {
   const rows = newList.map((list) =>
     createData(list.date, list.title, list.memo)
   );
-  console.log(rows);
+  // console.log(rows);
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
