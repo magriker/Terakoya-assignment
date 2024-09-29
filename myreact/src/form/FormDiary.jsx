@@ -1,10 +1,17 @@
 /** @jsxImportSource @emotion/react */
 
 import { css } from "@emotion/react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useState } from "react";
+import BasicTable from "../mui/BasicTable";
+import * as React from "react";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { TextField, Button } from "@mui/material";
 
 const FormDiray = () => {
   const container = css`
@@ -13,6 +20,11 @@ const FormDiray = () => {
     display: flex;
     justify-content: center;
     flex-direction: column;
+  `;
+
+  const tabelContainer = css`
+    width: 80%;
+    margin: 5rem auto;
   `;
 
   const formStyle = css`
@@ -84,6 +96,7 @@ const FormDiray = () => {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -101,47 +114,46 @@ const FormDiray = () => {
   };
 
   return (
-    <div css={container}>
-      <form onSubmit={handleSubmit(onSubmit)} css={formStyle}>
-        日付：
-        <label htmlFor="" css={labelStyle}>
-          <input type="date" css={inputStyle} {...register("date")}></input>
-        </label>
+    <>
+      <div css={container}>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <form onSubmit={handleSubmit(onSubmit)} css={formStyle}>
+            <DemoContainer components={["DatePicker"]}>
+              <Controller
+                name="date"
+                control={control}
+                render={({ field }) => <DatePicker label="日付" />}
+              ></Controller>
+            </DemoContainer>
+            <br />
+
+            <TextField
+              label="タイトル"
+              {...register("title")}
+              fullWidth
+              margin="normal"
+            />
+            <p css={errorStyle}>{errors.title?.message}</p>
+            <TextField
+              id="filled-multiline-static"
+              label="メモ"
+              multiline
+              rows={7}
+              defaultValue="Default Value"
+              {...register("memo")}
+            />
+            <button type="submit" css={buttonStyle}>
+              保存
+            </button>
+          </form>
+        </LocalizationProvider>
+
         <br />
-        タイトル：
-        <input
-          css={titleStyle}
-          type="text"
-          placeholder="タイトル"
-          {...register("title")}
-        />
-        <p css={errorStyle}>{errors.title?.message}</p>
-        <label htmlFor="memo">メモ：</label>
-        <textarea
-          id="memo"
-          rows={10}
-          cols={50}
-          {...register("memo")}
-          css={textareaStyle}
-        ></textarea>
-        <button type="submit" css={buttonStyle}>
-          保存
-        </button>
-      </form>
-      <br />
-      {diaryList.map((list, index) => (
-        <div key={index}>
-          <p>
-            日付：{list.date}
-            <br />
-            タイトル：{list.title}
-            <br />
-            メモ：{list.memo}
-          </p>
-          <br />
-        </div>
-      ))}
-    </div>
+      </div>
+      <div css={tabelContainer}>
+        <BasicTable diaryList={diaryList}></BasicTable>
+      </div>
+    </>
   );
 };
 
