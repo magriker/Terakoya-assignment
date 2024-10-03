@@ -15,7 +15,6 @@ const QueryMeigen = () => {
 
   const onSubmit = (data) => {
     setNumber(Number(data.number));
-    fetchMeigen();
     reset();
   };
 
