@@ -14,6 +14,7 @@ import Form from "./form/FormYup_practice";
 import FormDiray from "./form/FormDiary";
 import MuiTest from "./mui/Mui_test";
 import { Query, QueryClient, QueryClientProvider } from "react-query";
+import ReactQuery_test from "./form/ReactQuery_test";
 
 const dayjs = require("dayjs");
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -30,7 +31,8 @@ root.render(
   <React.StrictMode>
     {
       <QueryClientProvider client={cli}>
-        <QueryMeigen></QueryMeigen>
+        {/* <QueryMeigen></QueryMeigen> */}
+        <ReactQuery_test></ReactQuery_test>
       </QueryClientProvider>
     }
     {/* <MuiTest></MuiTest> */}

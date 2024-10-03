@@ -6,24 +6,24 @@ import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 
-const QueryMeigen = () => {
+const ReactQuery = () => {
   const [number, setNumber] = useState(1);
-  const { register, handleSubmit, reset } = useForm({
+  const { register, handleSubmit, reset, watch } = useForm({
     number: "",
   });
   console.log(number);
 
   const onSubmit = (data) => {
     setNumber(Number(data.number));
+    refetch();
     reset();
   };
 
   const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
-  const url = `https://pokeapi.co/api/v2/pokemon/${number}`;
 
   const fetchMeigen = async () => {
+    const url = `https://pokeapi.co/api/v2/pokemon/${number}`;
     console.log(number);
-
     await sleep(2000);
     const res = await fetch(url);
     if (res.ok) {
@@ -33,7 +33,10 @@ const QueryMeigen = () => {
     throw new Error(res.statusText);
   };
 
-  const { data, isLoading, isError, error } = useQuery("meigen", fetchMeigen);
+  const { data, isLoading, refetch, isError, error } = useQuery(
+    "meigen",
+    fetchMeigen
+  );
 
   return (
     <>
@@ -59,4 +62,4 @@ const QueryMeigen = () => {
   );
 };
 
-export default QueryMeigen;
+export default ReactQuery;
