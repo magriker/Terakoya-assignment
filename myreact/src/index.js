@@ -17,6 +17,7 @@ import { Query, QueryClient, QueryClientProvider } from "react-query";
 import ReactQuery_test from "./form/ReactQuery_test";
 import UseEffect_test from "./useEffect/UseEffect_test";
 import UseReducer_test from "./useReducer/UseReducer";
+import UseContext_test from "./useContext/UseContext_test";
 const dayjs = require("dayjs");
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -35,7 +36,8 @@ root.render(
         {/* <QueryMeigen></QueryMeigen> */}
         {/* <ReactQuery_test></ReactQuery_test> */}
         {/* <UseEffect_test></UseEffect_test> */}
-        <UseReducer_test></UseReducer_test>
+        {/* <UseReducer_test></UseReducer_test> */}
+        <UseContext_test></UseContext_test>
       </QueryClientProvider>
     }
     {/* <MuiTest></MuiTest> */}
