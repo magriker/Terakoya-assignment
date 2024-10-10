@@ -15,6 +15,8 @@ import FormDiray from "../form/FormDiary";
 import Form_1 from "../form/Form_1";
 import QueryMeigen from "../form/ReactQuery";
 import { Query, QueryClient, QueryClientProvider } from "react-query";
+import ReactQuery_test from "../form/ReactQuery_test";
+import { Outlet, useNavigate, useNavigation } from "react-router-dom";
 
 const cli = new QueryClient();
 
@@ -28,11 +30,16 @@ export default function AnchorTemporaryDrawer() {
   //   right: false,
   // });
   const [state, setState] = React.useState(false);
+  const navigate = useNavigate();
 
   const ANCHOR = "left";
 
   const toggleDrawer = () => {
     setState(!state);
+  };
+
+  const handelClick = () => {
+    navigate("/pokemon");
   };
 
   const list = (anchor) => (
@@ -45,12 +52,7 @@ export default function AnchorTemporaryDrawer() {
       <List>
         {["Diary", "Memo", "Pokemon"].map((text, index) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton
-              onClick={() => {
-                setMenue(text);
-                console.log(text);
-              }}
-            >
+            <ListItemButton onClick={handelClick}>
               <ListItemIcon>
                 <NoteIcon></NoteIcon>
               </ListItemIcon>
@@ -71,13 +73,7 @@ export default function AnchorTemporaryDrawer() {
             {list(ANCHOR)}
           </Drawer>
         </React.Fragment>
-        {menue === "Diary" && <FormDiray></FormDiray>}
-        {menue === "Memo" && <Form_1></Form_1>}
-        {menue === "Pokemon" && (
-          <QueryClientProvider client={cli}>
-            <QueryMeigen></QueryMeigen>
-          </QueryClientProvider>
-        )}
+        <Outlet></Outlet>
       </div>
     </>
   );
