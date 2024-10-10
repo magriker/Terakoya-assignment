@@ -17,6 +17,8 @@ import { Query, QueryClient, QueryClientProvider } from "react-query";
 import ReactQuery_test from "./form/ReactQuery_test";
 import UseEffect_test from "./useEffect/UseEffect_test";
 import UseReducer_test from "./useReducer/UseReducer";
+import UseContext_test from "./useContext/UseContext_test";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 const dayjs = require("dayjs");
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -28,18 +30,30 @@ const type = "time";
 const btName = "占う";
 const cli = new QueryClient();
 
+const routesBasic = createBrowserRouter([
+  {
+    path: "/",
+    element: <MuiTest />,
+    children: [
+      { path: "/diray", element: <FormDiray /> },
+      { path: "/pokemon", element: <ReactQuery_test /> },
+    ],
+  },
+]);
+
 root.render(
   <React.StrictMode>
-    {
-      <QueryClientProvider client={cli}>
-        {/* <QueryMeigen></QueryMeigen> */}
-        {/* <ReactQuery_test></ReactQuery_test> */}
-        {/* <UseEffect_test></UseEffect_test> */}
-        <UseReducer_test></UseReducer_test>
-      </QueryClientProvider>
-    }
+    <QueryClientProvider client={cli}>
+      <RouterProvider router={routesBasic}></RouterProvider>
+    </QueryClientProvider>
+    {/* <QueryMeigen></QueryMeigen> */}
+    {/* <ReactQuery_test></ReactQuery_test> */}
+    {/* <UseEffect_test></UseEffect_test> */}
+    {/* <UseReducer_test></UseReducer_test> */}
+    {/* <UseContext_test></UseContext_test> */}
+
     {/* <MuiTest></MuiTest> */}
-    {/* <FormDiray></FormDiray> */}
+    {/* <FormDiray ></FormDiray> */}
     {/* <Form></Form> */}
     {/* <FortuneTelling_4 btName={btName}></FortuneTelling_4> */}
     {/* <App test={test} />
