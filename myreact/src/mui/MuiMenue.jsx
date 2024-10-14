@@ -20,8 +20,8 @@ import { Outlet, useNavigate, useNavigation } from "react-router-dom";
 
 const cli = new QueryClient();
 
-export default function MuiMenue() {
-  const [menue, setMenue] = React.useState(null);
+export default function MuiMenu() {
+  const [menu, setMenue] = React.useState(null);
 
   // const [state, setState] = React.useState({
   //   top: false,
@@ -71,7 +71,7 @@ export default function MuiMenue() {
     <>
       <div>
         <React.Fragment>
-          <Button onClick={toggleDrawer}>Menue</Button>
+          <Button onClick={toggleDrawer}>Menu</Button>
           <Drawer anchor={ANCHOR} open={toggle} onClose={toggleDrawer}>
             {list(ANCHOR)}
           </Drawer>
