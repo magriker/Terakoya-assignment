@@ -12,7 +12,7 @@ import FortuneTelling_4 from "./FortuneTelling-4";
 import QueryMeigen from "./form/ReactQuery";
 import Form from "./form/FormYup_practice";
 import FormDiary from "./form/FormDiary";
-import MuiMenue from "./mui/MuiMenue";
+import MuiMenu from "./mui/MuiMenue";
 import { Query, QueryClient, QueryClientProvider } from "react-query";
 import Pokemon3 from "./form/Pokemon";
 import UseEffect_test from "./useEffect/UseEffect_test";
@@ -33,7 +33,7 @@ const cli = new QueryClient();
 const routesBasic = createBrowserRouter([
   {
     path: "/",
-    element: <MuiMenue />,
+    element: <MuiMenu />,
     children: [
       { path: "/diary", element: <FormDiary /> },
       { path: "/pokemon", element: <Pokemon3 /> },
