@@ -12,8 +12,10 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TextField, Button } from "@mui/material";
+import ja from "date-fns/locale/ja";
+import dayjs from "dayjs";
 
-const FormDiray = () => {
+const FormDiary = () => {
   const container = css`
     width: 50%;
     margin: 5rem auto;
@@ -88,6 +90,7 @@ const FormDiray = () => {
   const [diaryList, setDiaryList] = useState(diary ? JSON.parse(diary) : []);
 
   const schema = yup.object().shape({
+    date: yup.string().required("日付が必要です"),
     title: yup.string().required("タイトルが必要です。"),
     memo: yup.string(),
   });
@@ -100,7 +103,7 @@ const FormDiray = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      date: "",
+      date: null,
       title: "",
       memo: "",
     },
@@ -108,7 +111,13 @@ const FormDiray = () => {
   });
 
   const onSubmit = (data) => {
-    setDiaryList([...diaryList, data]);
+    console.log(data);
+
+    const dateString = dayjs(data.date).format("YYYY-MM-DD");
+    const result = { ...data, date: dateString };
+    console.log(result);
+
+    setDiaryList([...diaryList, result]);
     window.localStorage.setItem("diary", JSON.stringify([...diaryList, data]));
     reset();
   };
@@ -116,37 +125,46 @@ const FormDiray = () => {
   return (
     <>
       <div css={container}>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <form onSubmit={handleSubmit(onSubmit)} css={formStyle}>
-            <DemoContainer components={["DatePicker"]}>
-              <Controller
-                name="date"
-                control={control}
-                render={({ field }) => <DatePicker label="日付" />}
-              ></Controller>
-            </DemoContainer>
-            <br />
+        <form onSubmit={handleSubmit(onSubmit)} css={formStyle}>
+          <Controller
+            name="date"
+            control={control}
+            render={({ field }) => (
+              <LocalizationProvider
+                dateAdapter={AdapterDayjs}
+                adapterLocale={ja}
+              >
+                <p css={errorStyle}>{errors.date?.message}</p>
+                <DatePicker
+                  label="日付"
+                  format="YYYY/MM/DD"
+                  {...field}
+                  render={() => <TextField {...register("date")} />}
+                />
+              </LocalizationProvider>
+            )}
+          />
+          <br />
 
-            <TextField
-              label="タイトル"
-              {...register("title")}
-              fullWidth
-              margin="normal"
-            />
-            <p css={errorStyle}>{errors.title?.message}</p>
-            <TextField
-              id="filled-multiline-static"
-              label="メモ"
-              multiline
-              rows={7}
-              defaultValue="Default Value"
-              {...register("memo")}
-            />
-            <button type="submit" css={buttonStyle}>
-              保存
-            </button>
-          </form>
-        </LocalizationProvider>
+          <TextField
+            label="タイトル"
+            {...register("title")}
+            fullWidth
+            margin="normal"
+          />
+          <p css={errorStyle}>{errors.title?.message}</p>
+          <TextField
+            id="filled-multiline-static"
+            label="メモ"
+            multiline
+            rows={7}
+            defaultValue="Default Value"
+            {...register("memo")}
+          />
+          <button type="submit" css={buttonStyle}>
+            保存
+          </button>
+        </form>
 
         <br />
       </div>
@@ -157,4 +175,4 @@ const FormDiray = () => {
   );
 };
 
-export default FormDiray;
+export default FormDiary;

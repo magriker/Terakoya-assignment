@@ -15,12 +15,12 @@ import FormDiray from "../form/FormDiary";
 import Form_1 from "../form/Form_1";
 import QueryMeigen from "../form/ReactQuery";
 import { Query, QueryClient, QueryClientProvider } from "react-query";
-import ReactQuery_test from "../form/ReactQuery_test";
+import ReactQuery_test from "../form/Pokemon";
 import { Outlet, useNavigate, useNavigation } from "react-router-dom";
 
 const cli = new QueryClient();
 
-export default function AnchorTemporaryDrawer() {
+export default function MuiMenue() {
   const [menue, setMenue] = React.useState(null);
 
   // const [state, setState] = React.useState({
@@ -29,17 +29,20 @@ export default function AnchorTemporaryDrawer() {
   //   bottom: false,
   //   right: false,
   // });
-  const [state, setState] = React.useState(false);
+  const [toggle, setToggle] = React.useState(false);
   const navigate = useNavigate();
 
   const ANCHOR = "left";
 
   const toggleDrawer = () => {
-    setState(!state);
+    setToggle(!toggle);
   };
 
-  const handelClick = () => {
-    navigate("/pokemon");
+  const handelClick = (text) => {
+    console.log(text);
+
+    const lowerCase = text.toLowerCase();
+    navigate(`/${lowerCase}`);
   };
 
   const list = (anchor) => (
@@ -50,9 +53,9 @@ export default function AnchorTemporaryDrawer() {
       onKeyDown={toggleDrawer}
     >
       <List>
-        {["Diary", "Memo", "Pokemon"].map((text, index) => (
+        {["Diary", "Pokemon"].map((text, index) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton onClick={handelClick}>
+            <ListItemButton onClick={() => handelClick(text)}>
               <ListItemIcon>
                 <NoteIcon></NoteIcon>
               </ListItemIcon>
@@ -69,7 +72,7 @@ export default function AnchorTemporaryDrawer() {
       <div>
         <React.Fragment>
           <Button onClick={toggleDrawer}>Menue</Button>
-          <Drawer anchor={ANCHOR} open={state} onClose={toggleDrawer}>
+          <Drawer anchor={ANCHOR} open={toggle} onClose={toggleDrawer}>
             {list(ANCHOR)}
           </Drawer>
         </React.Fragment>

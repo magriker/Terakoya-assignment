@@ -23,7 +23,7 @@ const fetchMeigen = async (number) => {
   // return;
 };
 
-const ReactQuery_Test3 = () => {
+const Pokemon3 = () => {
   const { register, handleSubmit, reset, watch } = useForm({
     number: 1,
   });
@@ -71,7 +71,7 @@ const ReactQuery_Test3 = () => {
   );
 };
 
-const ReactQuery_Test2 = () => {
+const Pokemon2 = () => {
   const [number, setNumber] = useState(1);
   const { data, isLoading, refetch, isError, error } = useQuery(
     "meigen",
@@ -98,7 +98,7 @@ const ReactQuery_Test2 = () => {
   );
 };
 
-const ReactQuery_test = () => {
+const Pokemon = () => {
   const [number, setNumber] = useState(1);
   const [data, setData] = useState(null);
   const [isLoading, setIsloading] = useState(false);
@@ -126,13 +126,10 @@ const ReactQuery_test = () => {
         決定
       </button>
       <div style={{ marginTop: 30 }}>
-        <ReactQuery_Test2></ReactQuery_Test2>
-      </div>
-      <div style={{ marginTop: 30 }}>
-        <ReactQuery_Test3></ReactQuery_Test3>
+        <Pokemon3></Pokemon3>
       </div>
     </>
   );
 };
 
-export default ReactQuery_test;
+export default Pokemon3;

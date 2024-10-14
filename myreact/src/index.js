@@ -11,10 +11,10 @@ import FortuneTelling_3 from "./FortuneTelling-3";
 import FortuneTelling_4 from "./FortuneTelling-4";
 import QueryMeigen from "./form/ReactQuery";
 import Form from "./form/FormYup_practice";
-import FormDiray from "./form/FormDiary";
-import MuiTest from "./mui/Mui_test";
+import FormDiary from "./form/FormDiary";
+import MuiMenue from "./mui/MuiMenue";
 import { Query, QueryClient, QueryClientProvider } from "react-query";
-import ReactQuery_test from "./form/ReactQuery_test";
+import Pokemon3 from "./form/Pokemon";
 import UseEffect_test from "./useEffect/UseEffect_test";
 import UseReducer_test from "./useReducer/UseReducer";
 import UseContext_test from "./useContext/UseContext_test";
@@ -33,10 +33,10 @@ const cli = new QueryClient();
 const routesBasic = createBrowserRouter([
   {
     path: "/",
-    element: <MuiTest />,
+    element: <MuiMenue />,
     children: [
-      { path: "/diray", element: <FormDiray /> },
-      { path: "/pokemon", element: <ReactQuery_test /> },
+      { path: "/diary", element: <FormDiary /> },
+      { path: "/pokemon", element: <Pokemon3 /> },
     ],
   },
 ]);
