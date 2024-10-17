@@ -118,7 +118,10 @@ const FormDiary = () => {
     console.log(result);
 
     setDiaryList([...diaryList, result]);
-    window.localStorage.setItem("diary", JSON.stringify([...diaryList, data]));
+    window.localStorage.setItem(
+      "diary",
+      JSON.stringify([...diaryList, result])
+    );
     reset();
   };
 
