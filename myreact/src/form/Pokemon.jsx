@@ -10,11 +10,17 @@ import { number } from "yup";
 
 const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 const fetchMeigen = async (number) => {
-  const url = `https://pokeapi.co/api/v2/pokemon/${number}`;
+  // const url = `https://pokeapi.co/api/v2/pokemon/${number}`;
+  const url = "https://animechan.io/api/v1/quotes/random";
   console.log(number);
-  await sleep(2000);
-  const res = await fetch(url);
+  const res = await fetch(url, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
   if (res.ok) {
+    console.log(await res.json());
     return res.json();
   }
 
