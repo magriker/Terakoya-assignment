@@ -1,3 +1,6 @@
+/** @jsxImportSource @emotion/react */
+
+import { css } from "@emotion/react";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -10,12 +13,13 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Container } from "@mui/material";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import TextField from "@mui/material/TextField";
-import FormControl from "@mui/material/FormControl";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 function App() {
   return (
@@ -28,36 +32,120 @@ function App() {
 }
 
 const Memo = () => {
+  const titleContainer = css`
+    margin: 3rem auto;
+  `;
+
+  const textfield = css`
+    margin: 1rem 0;
+  `;
+
+  const titleButton = css`
+    width: 7rem;
+    height: 3rem;
+    margin-right: 0.5rem;
+  `;
+
+  const appTitle = css`
+    font-size: 4rem;
+  `;
+
+  const formButton = css`
+    width: 10rem;
+    align-self: flex-end;
+  `;
+
+  const formConatainer = css`
+    display: flex;
+    flex-direction: column;
+  `;
+
+  const errorStyle = css`
+    color: red;
+  `;
+
+  const schema = yup.object().shape({
+    date: yup.string().required("日付が必要です"),
+    title: yup.string().required("タイトルが必要です"),
+    memo: yup.string(),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    control,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      date: null,
+      title: "",
+      memo: "",
+    },
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmit = (data) => {
+    console.log(data);
+    reset();
+  };
+
   return (
     <>
-      <Container maxWidth="sm">
-        <h1>Memo App</h1>
-        <Button variant="outlined">新規作成</Button>
-        <Button variant="outlined">編集</Button>
-      </Container>
-      <Container maxWidth="sm">
-        <form action="">
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DemoContainer components={["DatePicker"]}>
-              <DatePicker label="Basic date picker" />
-            </DemoContainer>
-          </LocalizationProvider>
+      <div>
+        <Container css={titleContainer}>
+          <h1 css={appTitle}>Memo App</h1>
+          <Button variant="outlined" css={titleButton}>
+            新規作成
+          </Button>
+          <Button variant="outlined" css={titleButton}>
+            編集
+          </Button>
+        </Container>
+        <Container>
+          <form
+            action=""
+            css={formConatainer}
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <Controller
+              name="date"
+              control={control}
+              render={({ field }) => (
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <p css={errorStyle}>{errors.date?.message}</p>
+                  <DatePicker
+                    label="日付"
+                    {...field}
+                    renderLoading={() => <TextField {...register("date")} />}
+                  />
+                </LocalizationProvider>
+              )}
+            />
 
-          <TextField
-            id="outlined-basic"
-            fullWidth
-            label="タイトル"
-            variant="outlined"
-          />
-          <TextField
-            id="outlined-multiline-static"
-            label="メモ"
-            multiline
-            fullWidth
-            rows={8}
-          />
-        </form>
-      </Container>
+            <TextField
+              id="outlined-basic"
+              fullWidth
+              label="タイトル"
+              variant="outlined"
+              {...register("title")}
+              css={textfield}
+            />
+            <TextField
+              id="outlined-multiline-static"
+              label="メモ"
+              multiline
+              fullWidth
+              {...register("memo")}
+              rows={8}
+              css={textfield}
+            />
+            <Button variant="outlined" type="submit" css={formButton}>
+              保存
+            </Button>
+          </form>
+        </Container>
+      </div>
     </>
   );
 };
