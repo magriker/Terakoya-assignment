@@ -1,12 +1,20 @@
-# React + Vite
+# ウェブアプリの概要
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+ユーザーがメモを日記のように保存できるアプリ。過去に保存したメモを見たり編集を行うことができる。
 
-Currently, two official plugins are available:
+# ユーザーストーリー
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+ユーザーは新規にメモを作成するか、過去のメモを編集するかを選択できる。
+日付、タイトル、メモを記載し、保存ボタンを押すと、保存される。
 
-## aaa
+# ユースケース
 
-- aaaa
+？？
+
+# 機能要件
+
+- ログイン機能(実装したい)
+- メモ新規作成機能
+- メモ編集機能
+- メモ削除機能
+- メモ保存機能

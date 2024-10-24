@@ -64,6 +64,8 @@ const Memo = () => {
     color: red;
   `;
 
+  const [memodata, setMemodata] = React.useState();
+
   const schema = yup.object().shape({
     date: yup.string().required("日付が必要です"),
     title: yup.string().required("タイトルが必要です"),
