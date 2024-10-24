@@ -18,4 +18,4 @@
 
 # 画面
 
-![Test Image 3](/public/名称未設定ファイル.drawio.png)
+![Test Image 3](./public/名称未設定ファイル.drawio.png)
