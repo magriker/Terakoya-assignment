@@ -20,6 +20,8 @@ import TextField from "@mui/material/TextField";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import ja from "date-fns/locale/ja";
+import dayjs from "dayjs";
 
 function App() {
   return (
@@ -88,6 +90,8 @@ const Memo = () => {
   });
 
   const onSubmit = (data) => {
+    const dateString = dayjs(data.date).format("YYYY-MM-DD");
+    console.log(dateString);
     console.log(data);
     reset();
   };
@@ -118,6 +122,7 @@ const Memo = () => {
                   <p css={errorStyle}>{errors.date?.message}</p>
                   <DatePicker
                     label="日付"
+                    format="YYYY/MM/DD"
                     {...field}
                     renderLoading={() => <TextField {...register("date")} />}
                   />
