@@ -22,6 +22,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ja from "date-fns/locale/ja";
 import dayjs from "dayjs";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function App() {
   return (
@@ -66,7 +67,30 @@ const Memo = () => {
     color: red;
   `;
 
-  const [memodata, setMemodata] = React.useState();
+  const listContainer = css`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 4px;
+    margin-bottom: 5px;
+
+    &:hover {
+      background-color: darkblue;
+      color: white;
+      cursor: pointer;
+    }
+  `;
+
+  const listButton = css`
+    margin-right: 0;
+  `;
+
+  const memo = window.localStorage.getItem("memo");
+  const [memoLists, setMemoLists] = React.useState(
+    memo ? JSON.parse(memo) : []
+  );
 
   const schema = yup.object().shape({
     date: yup.string().required("日付が必要です"),
@@ -91,8 +115,15 @@ const Memo = () => {
 
   const onSubmit = (data) => {
     const dateString = dayjs(data.date).format("YYYY-MM-DD");
-    console.log(dateString);
-    console.log(data);
+
+    console.log(memoLists);
+
+    const result = { ...data, date: dateString };
+    console.log(result);
+    setMemoLists([...memoLists, result]);
+
+    window.localStorage.setItem("memo", JSON.stringify([...memoLists, result]));
+
     reset();
   };
 
@@ -104,9 +135,18 @@ const Memo = () => {
           <Button variant="outlined" css={titleButton}>
             新規作成
           </Button>
-          <Button variant="outlined" css={titleButton}>
-            編集
-          </Button>
+        </Container>
+        <Container>
+          {memoLists.map((list, index) => (
+            <div key={index} css={listContainer}>
+              <p>日付：{list.date}</p>
+              <p>タイトル：{list.title}</p>
+              <Button variant="contained" css={listButton}>
+                <DeleteIcon />
+                削除
+              </Button>
+            </div>
+          ))}
         </Container>
         <Container>
           <form
@@ -129,7 +169,7 @@ const Memo = () => {
                 </LocalizationProvider>
               )}
             />
-
+            <p css={errorStyle}>{errors.title?.message}</p>
             <TextField
               id="outlined-basic"
               fullWidth
@@ -155,6 +195,10 @@ const Memo = () => {
       </div>
     </>
   );
+};
+
+const listBox = ({ date, title }) => {
+  return;
 };
 
 const Menu = () => {
