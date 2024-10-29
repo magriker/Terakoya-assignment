@@ -23,7 +23,9 @@ import * as yup from "yup";
 import ja from "date-fns/locale/ja";
 import dayjs from "dayjs";
 import DeleteIcon from "@mui/icons-material/Delete";
-
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import { Inbox } from "@mui/icons-material";
 function App() {
   return (
     <>
@@ -67,26 +69,6 @@ const Memo = () => {
     color: red;
   `;
 
-  const listContainer = css`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    border: 1px solid black;
-    border-radius: 5px;
-    padding: 4px;
-    margin-bottom: 5px;
-
-    &:hover {
-      background-color: darkblue;
-      color: white;
-      cursor: pointer;
-    }
-  `;
-
-  const listButton = css`
-    margin-right: 0;
-  `;
-
   const memo = window.localStorage.getItem("memo");
   const [memoLists, setMemoLists] = React.useState(
     memo ? JSON.parse(memo) : []
@@ -114,7 +96,9 @@ const Memo = () => {
   });
 
   const onSubmit = (data) => {
-    const dateString = dayjs(data.date).format("YYYY-MM-DD");
+    console.log(data.date);
+
+    const dateString = dayjs(data.date).format("YYYY-MM-DD-HH-mm-ss");
 
     console.log(memoLists);
 
@@ -124,6 +108,14 @@ const Memo = () => {
 
     window.localStorage.setItem("memo", JSON.stringify([...memoLists, result]));
 
+    reset();
+  };
+
+  const deleList = (keynum, event) => {
+    console.log(keynum);
+    console.log("clicked");
+
+    setMemoLists(memoLists.filter((_, index) => index !== keynum));
     reset();
   };
 
@@ -138,14 +130,12 @@ const Memo = () => {
         </Container>
         <Container>
           {memoLists.map((list, index) => (
-            <div key={index} css={listContainer}>
-              <p>日付：{list.date}</p>
-              <p>タイトル：{list.title}</p>
-              <Button variant="contained" css={listButton}>
-                <DeleteIcon />
-                削除
-              </Button>
-            </div>
+            <ListBox
+              list={list}
+              key={index}
+              keynum={index}
+              deleList={deleList}
+            ></ListBox>
           ))}
         </Container>
         <Container>
@@ -197,8 +187,87 @@ const Memo = () => {
   );
 };
 
-const listBox = ({ date, title }) => {
-  return;
+const ListBox = ({ list, keynum, deleList }) => {
+  console.log(keynum);
+
+  const listContainer = css`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 4px;
+    margin-bottom: 5px;
+
+    &:hover {
+      background-color: darkblue;
+      color: white;
+      cursor: pointer;
+    }
+  `;
+
+  const listButton = css`
+    margin-right: 0;
+  `;
+
+  const modalBox = css`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    background-color: rgb(142, 153, 149);
+    border: 2px solid #000;
+    box-shadow: 24;
+    padding: 3rem;
+  `;
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  return (
+    <div>
+      <div css={listContainer} onClick={handleOpen}>
+        <p>日付：{list.date}</p>
+        <p>タイトル：{list.title}</p>
+        <Button
+          variant="contained"
+          css={listButton}
+          onClick={() => deleList(keynum)}
+        >
+          <DeleteIcon />
+          削除
+        </Button>
+      </div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box css={modalBox}>
+          <TextField
+            id="outlined-basic"
+            fullWidth
+            label="タイトル"
+            variant="outlined"
+            value={list.title}
+            // {...register("title")}
+          />
+
+          <TextField
+            id="outlined-multiline-static"
+            label="メモ"
+            multiline
+            fullWidth
+            rows={8}
+            value={list.memo}
+          />
+        </Box>
+      </Modal>
+    </div>
+  );
 };
 
 const Menu = () => {
