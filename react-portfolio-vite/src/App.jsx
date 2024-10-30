@@ -98,7 +98,7 @@ const Memo = () => {
   const onSubmit = (data) => {
     console.log(data.date);
 
-    const dateString = dayjs(data.date).format("YYYY-MM-DD-HH-mm-ss");
+    const dateString = dayjs(data.date).format("YYYY-MM-DD");
 
     console.log(memoLists);
 
@@ -111,12 +111,17 @@ const Memo = () => {
     reset();
   };
 
-  const deleList = (keynum, event) => {
+  const submitEdit = () => {
+    console.log("submitedit");
+    reset();
+  };
+
+  const deleList = (keynum) => {
     console.log(keynum);
     console.log("clicked");
 
     setMemoLists(memoLists.filter((_, index) => index !== keynum));
-    reset();
+    window.localStorage.setItem("memo", JSON.stringify([...memoLists]));
   };
 
   return (
@@ -135,6 +140,7 @@ const Memo = () => {
               key={index}
               keynum={index}
               deleList={deleList}
+              submitEdit={submitEdit}
             ></ListBox>
           ))}
         </Container>
@@ -187,7 +193,7 @@ const Memo = () => {
   );
 };
 
-const ListBox = ({ list, keynum, deleList }) => {
+const ListBox = ({ list, keynum, deleList, submitEdit }) => {
   console.log(keynum);
 
   const listContainer = css`
@@ -198,10 +204,12 @@ const ListBox = ({ list, keynum, deleList }) => {
     border-radius: 5px;
     padding: 4px;
     margin-bottom: 5px;
+    transition: all 0.2s;
 
     &:hover {
-      background-color: darkblue;
-      color: white;
+      border: 1px solid rgb(63, 164, 252);
+      box-shadow: 0 0 5px rgb(63, 164, 252);
+
       cursor: pointer;
     }
   `;
@@ -222,15 +230,27 @@ const ListBox = ({ list, keynum, deleList }) => {
     padding: 3rem;
   `;
 
+  const modalForm = css`
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  `;
+
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    setOpen(true);
+  };
   const handleClose = () => setOpen(false);
 
   return (
     <div>
-      <div css={listContainer} onClick={handleOpen}>
+      <div css={listContainer}>
         <p>日付：{list.date}</p>
         <p>タイトル：{list.title}</p>
+        <Button variant="contained" css={listButton} onClick={handleOpen}>
+          <DeleteIcon />
+          編集
+        </Button>
         <Button
           variant="contained"
           css={listButton}
@@ -247,23 +267,28 @@ const ListBox = ({ list, keynum, deleList }) => {
         aria-describedby="modal-modal-description"
       >
         <Box css={modalBox}>
-          <TextField
-            id="outlined-basic"
-            fullWidth
-            label="タイトル"
-            variant="outlined"
-            value={list.title}
-            // {...register("title")}
-          />
+          <form action="" css={modalForm} onSubmit={() => submitEdit()}>
+            <TextField
+              id="outlined-basic"
+              fullWidth
+              label="タイトル"
+              variant="outlined"
+              value={list.title}
+              // {...register("title")}
+            />
 
-          <TextField
-            id="outlined-multiline-static"
-            label="メモ"
-            multiline
-            fullWidth
-            rows={8}
-            value={list.memo}
-          />
+            <TextField
+              id="outlined-multiline-static"
+              label="メモ"
+              multiline
+              fullWidth
+              rows={8}
+              value={list.memo}
+            />
+            <Button variant="outlined" type="submit">
+              変更
+            </Button>
+          </form>
         </Box>
       </Modal>
     </div>
