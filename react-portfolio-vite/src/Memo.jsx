@@ -74,32 +74,22 @@ const Memo = () => {
   });
 
   const onSubmit = (data) => {
-    console.log(data.date);
-
     const dateString = dayjs(data.date).format("YYYY-MM-DD");
-
-    console.log(memoLists);
-
     const result = { ...data, date: dateString };
-    console.log(result);
     setMemoLists([...memoLists, result]);
-
     window.localStorage.setItem("memo", JSON.stringify([...memoLists, result]));
-
     reset();
   };
 
-  const submitEdit = () => {
-    console.log("submitedit");
-    reset();
+  const submitEdit = (handleClose) => (title, content) => {
+    console.log(title, content);
+    handleClose();
   };
 
   const deleList = (keynum) => {
     console.log(keynum);
     console.log("clicked");
-
     const data = memoLists.filter((_, index) => index !== keynum);
-
     setMemoLists(data);
     window.localStorage.setItem("memo", JSON.stringify([...data]));
   };
@@ -114,9 +104,9 @@ const Memo = () => {
           </Button>
         </Container>
         <Container>
-          {memoLists.map((list, index) => (
+          {memoLists.map((memo, index) => (
             <ListBox
-              list={list}
+              memo={memo}
               key={index}
               keynum={index}
               deleList={deleList}
