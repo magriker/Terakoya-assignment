@@ -1,30 +1,12 @@
 /** @jsxImportSource @emotion/react */
 
 import { Box, Button, Modal, TextField } from "@mui/material";
-import { css } from "@emotion/react";
 import { useState } from "react";
+import { modalBox, modalForm } from "./Css";
 
-const MemoModal = ({ memo, open, handleClose, submitEdit }) => {
-  const [title, setTitle] = useState(memo.title);
-  const [content, setCotent] = useState(memo.memo);
-
-  const modalBox = css`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 500px;
-    background-color: rgb(142, 153, 149);
-    border: 2px solid #000;
-    box-shadow: 24;
-    padding: 3rem;
-  `;
-
-  const modalForm = css`
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  `;
+const MemoModal = ({ item, open, handleClose, editContents, keynum }) => {
+  const [title, setTitle] = useState(item.title);
+  const [content, setCotent] = useState(item.memo);
 
   return (
     <Modal
@@ -40,6 +22,7 @@ const MemoModal = ({ memo, open, handleClose, submitEdit }) => {
             fullWidth
             label="タイトル"
             variant="outlined"
+            defaultValue={item.title}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             // {...register("title")}
@@ -51,10 +34,14 @@ const MemoModal = ({ memo, open, handleClose, submitEdit }) => {
             multiline
             fullWidth
             rows={8}
+            defaultValue={item.memo}
             value={content}
             onChange={(e) => setCotent(e.target.value)}
           />
-          <Button variant="outlined" onClick={() => submitEdit(title, content)}>
+          <Button
+            variant="outlined"
+            onClick={() => editContents(title, content, keynum)}
+          >
             変更
           </Button>
         </form>

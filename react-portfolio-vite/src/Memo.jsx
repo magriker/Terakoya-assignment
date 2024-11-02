@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 
-import { css } from "@emotion/react";
 import * as React from "react";
 import Button from "@mui/material/Button";
 import { Container } from "@mui/material";
@@ -12,45 +11,28 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import dayjs from "dayjs";
-import ListBox from "./LisBox";
+import ListBox from "./ListBox";
+import {
+  appTitle,
+  errorStyle,
+  formButton,
+  formConatainer,
+  textfield,
+  titleButton,
+  titleContainer,
+} from "./Css";
 
 const Memo = () => {
-  const titleContainer = css`
-    margin: 3rem auto;
-  `;
-
-  const textfield = css`
-    margin: 1rem 0;
-  `;
-
-  const titleButton = css`
-    width: 7rem;
-    height: 3rem;
-    margin-right: 0.5rem;
-  `;
-
-  const appTitle = css`
-    font-size: 4rem;
-  `;
-
-  const formButton = css`
-    width: 10rem;
-    align-self: flex-end;
-  `;
-
-  const formConatainer = css`
-    display: flex;
-    flex-direction: column;
-  `;
-
-  const errorStyle = css`
-    color: red;
-  `;
-
   const memo = window.localStorage.getItem("memo");
   const [memoLists, setMemoLists] = React.useState(
     memo ? JSON.parse(memo) : []
   );
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => setOpen(false);
 
   const schema = yup.object().shape({
     date: yup.string().required("日付が必要です"),
@@ -81,8 +63,10 @@ const Memo = () => {
     reset();
   };
 
-  const submitEdit = (handleClose) => (title, content) => {
+  const editContents = (title, content, keynum) => {
     console.log(title, content);
+    console.log(keynum);
+
     handleClose();
   };
 
@@ -104,13 +88,16 @@ const Memo = () => {
           </Button>
         </Container>
         <Container>
-          {memoLists.map((memo, index) => (
+          {memoLists.map((item, index) => (
             <ListBox
-              memo={memo}
+              item={item}
               key={index}
               keynum={index}
               deleList={deleList}
-              submitEdit={submitEdit}
+              editContents={editContents}
+              handleOpen={handleOpen}
+              handleClose={handleClose}
+              open={open}
             />
           ))}
         </Container>
