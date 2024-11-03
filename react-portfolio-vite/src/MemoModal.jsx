@@ -1,13 +1,18 @@
 /** @jsxImportSource @emotion/react */
 
 import { Box, Button, Modal, TextField } from "@mui/material";
-import { useState } from "react";
 import { modalBox, modalForm } from "./Css";
 
-const MemoModal = ({ item, open, handleClose, editContents, keynum }) => {
-  const [title, setTitle] = useState(item.title);
-  const [content, setCotent] = useState(item.memo);
-
+const MemoModal = ({
+  open,
+  handleClose,
+  editContents,
+  newTitle,
+  newMemo,
+  setNewTitle,
+  setNewMemo,
+  targetNum,
+}) => {
   return (
     <Modal
       open={open}
@@ -22,9 +27,8 @@ const MemoModal = ({ item, open, handleClose, editContents, keynum }) => {
             fullWidth
             label="タイトル"
             variant="outlined"
-            defaultValue={item.title}
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={newTitle}
+            onChange={(e) => setNewTitle(e.target.value)}
             // {...register("title")}
           />
 
@@ -34,13 +38,12 @@ const MemoModal = ({ item, open, handleClose, editContents, keynum }) => {
             multiline
             fullWidth
             rows={8}
-            defaultValue={item.memo}
-            value={content}
-            onChange={(e) => setCotent(e.target.value)}
+            value={newMemo}
+            onChange={(e) => setNewMemo(e.target.value)}
           />
           <Button
             variant="outlined"
-            onClick={() => editContents(title, content, keynum)}
+            onClick={() => editContents(newTitle, newMemo, targetNum)}
           >
             変更
           </Button>

@@ -11,7 +11,6 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import dayjs from "dayjs";
-import ListBox from "./ListBox";
 import {
   appTitle,
   errorStyle,
@@ -21,6 +20,8 @@ import {
   titleButton,
   titleContainer,
 } from "./Css";
+import MemoItem from "./MemoItem";
+import MemoModal from "./MemoModal";
 
 const Memo = () => {
   const memo = window.localStorage.getItem("memo");
@@ -29,8 +30,16 @@ const Memo = () => {
   );
 
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
+  // const [targetItem, setTargetItem] = React.useState();
+  const [newTitle, setNewTitle] = React.useState();
+  const [newMemo, setNewMemo] = React.useState();
+  const [targetNum, setTargetNum] = React.useState();
+
+  const handleOpen = (item, keynum) => {
     setOpen(true);
+    setNewTitle(item.title);
+    setNewMemo(item.memo);
+    setTargetNum(keynum);
   };
   const handleClose = () => setOpen(false);
 
@@ -63,9 +72,12 @@ const Memo = () => {
     reset();
   };
 
-  const editContents = (title, content, keynum) => {
-    console.log(title, content);
-    console.log(keynum);
+  const editContents = (newTitle, newMemo, targetNum) => {
+    console.log(newTitle, newMemo);
+    const newlists = memoLists.map((item, index) =>
+      index === targetNum ? { ...item, title: newTitle, memo: newMemo } : item
+    );
+    setMemoLists([...newlists]);
 
     handleClose();
   };
@@ -89,7 +101,7 @@ const Memo = () => {
         </Container>
         <Container>
           {memoLists.map((item, index) => (
-            <ListBox
+            <MemoItem
               item={item}
               key={index}
               keynum={index}
@@ -145,6 +157,16 @@ const Memo = () => {
             </Button>
           </form>
         </Container>
+        <MemoModal
+          open={open}
+          newTitle={newTitle}
+          newMemo={newMemo}
+          handleClose={handleClose}
+          editContents={editContents}
+          setNewTitle={setNewTitle}
+          setNewMemo={setNewMemo}
+          targetNum={targetNum}
+        ></MemoModal>
       </div>
     </>
   );
