@@ -3,6 +3,7 @@
 import { Button, css } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { listButton, listContainer } from "./Css";
+import EditNoteIcon from "@mui/icons-material/EditNote";
 
 const MemoItem = ({ item, keynum, deleList, handleOpen }) => {
   const buttonContainer = css`
@@ -22,6 +23,7 @@ const MemoItem = ({ item, keynum, deleList, handleOpen }) => {
             css={listButton}
             onClick={() => handleOpen(item, keynum)}
           >
+            <EditNoteIcon />
             編集
           </Button>
           <Button

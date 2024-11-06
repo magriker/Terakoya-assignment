@@ -126,17 +126,17 @@ const CreatNewitem = ({ handleClose, setMemoLists, memoLists }) => {
         fullWidth
         label="タイトル"
         variant="outlined"
-        {...register("title")}
         css={textfield}
+        {...register("title")}
       />
       <TextField
         id="outlined-multiline-static"
         label="メモ"
         multiline
         fullWidth
-        {...register("memo")}
         rows={8}
         css={textfield}
+        {...register("memo")}
       />
       <Button
         variant="outlined"
@@ -158,13 +158,8 @@ const EditModal = ({
   setNewMemo,
   targetNum,
 }) => {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext();
   return (
     <div css={formConatainer}>
-      <p css={errorStyle}>{errors.title?.message}</p>
       <TextField
         id="outlined-basic"
         fullWidth
