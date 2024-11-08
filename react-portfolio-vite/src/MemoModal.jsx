@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-
+import { v4 as uuid } from "uuid";
 import { Box, Button, Modal, TextField } from "@mui/material";
 import {
   errorStyle,
@@ -25,15 +25,11 @@ const MemoModal = ({
   open,
   handleClose,
   editContents,
-  newTitle,
-  newMemo,
-  setNewTitle,
-  setNewMemo,
-  targetNum,
-  openNewModal,
-  setOpenNewModal,
+  IsNewModal,
   memoLists,
   setMemoLists,
+  targetItem,
+  setTargetItem,
 }) => {
   const schema = yup.object().shape({
     date: yup.string().required("日付が必要です"),
@@ -43,9 +39,7 @@ const MemoModal = ({
 
   const useFormmethod = useForm({
     defaultValues: {
-      date: null,
-      title: "",
-      memo: "",
+      ...targetItem,
     },
     resolver: yupResolver(schema),
   });
@@ -60,22 +54,18 @@ const MemoModal = ({
       <Box css={modalBox}>
         <FormProvider {...useFormmethod}>
           <form action="" css={modalForm}>
-            {openNewModal ? (
+            {IsNewModal ? (
               <CreatNewitem
-                setOpenNewModal={setOpenNewModal}
                 handleClose={handleClose}
                 setMemoLists={setMemoLists}
                 memoLists={memoLists}
               ></CreatNewitem>
             ) : (
-              <EditModal
+              <Edititem
                 editContents={editContents}
-                newTitle={newTitle}
-                newMemo={newMemo}
-                setNewTitle={setNewTitle}
-                setNewMemo={setNewMemo}
-                targetNum={targetNum}
-              ></EditModal>
+                targetItem={targetItem}
+                setTargetItem={setTargetItem}
+              ></Edititem>
             )}
           </form>
         </FormProvider>
@@ -95,7 +85,7 @@ const CreatNewitem = ({ handleClose, setMemoLists, memoLists }) => {
 
   const onSubmit = (data) => {
     const dateString = dayjs(data.date).format("YYYY-MM-DD");
-    const result = { ...data, date: dateString };
+    const result = { ...data, date: dateString, id: uuid() };
     setMemoLists([...memoLists, result]);
     window.localStorage.setItem("memo", JSON.stringify([...memoLists, result]));
     console.log("out", data);
@@ -150,14 +140,7 @@ const CreatNewitem = ({ handleClose, setMemoLists, memoLists }) => {
   );
 };
 
-const EditModal = ({
-  editContents,
-  newTitle,
-  newMemo,
-  setNewTitle,
-  setNewMemo,
-  targetNum,
-}) => {
+const Edititem = ({ editContents, targetItem, setTargetItem }) => {
   return (
     <div css={formConatainer}>
       <TextField
@@ -165,8 +148,10 @@ const EditModal = ({
         fullWidth
         label="タイトル"
         variant="outlined"
-        value={newTitle}
-        onChange={(e) => setNewTitle(e.target.value)}
+        value={targetItem.title}
+        onChange={(e) =>
+          setTargetItem({ ...targetItem, title: e.target.value })
+        }
         css={textfield}
       />
 
@@ -176,13 +161,13 @@ const EditModal = ({
         multiline
         fullWidth
         rows={8}
-        value={newMemo}
-        onChange={(e) => setNewMemo(e.target.value)}
+        value={targetItem.memo}
+        onChange={(e) => setTargetItem({ ...targetItem, memo: e.target.value })}
         css={textfield}
       />
       <Button
         variant="outlined"
-        onClick={() => editContents(newTitle, newMemo, targetNum)}
+        onClick={() => editContents(targetItem)}
         css={formButton}
       >
         変更

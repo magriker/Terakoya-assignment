@@ -9,43 +9,41 @@ import MemoModal from "./MemoModal";
 
 const Memo = () => {
   const memo = window.localStorage.getItem("memo");
+  const defaultItem = { title: "", memo: "", date: null };
   const [memoLists, setMemoLists] = React.useState(
     memo ? JSON.parse(memo) : []
   );
 
   const [open, setOpen] = React.useState(false);
   // const [targetItem, setTargetItem] = React.useState();
-  const [newTitle, setNewTitle] = React.useState();
-  const [newMemo, setNewMemo] = React.useState();
-  const [targetNum, setTargetNum] = React.useState();
-  const [openNewModal, setOpenNewModal] = React.useState(false);
+  const [targetItem, setTargetItem] = React.useState(defaultItem);
+  const [IsNewModal, setIsNewModal] = React.useState(false);
 
-  const handleOpen = (item, keynum) => {
+  const handleOpen = (item) => {
     setOpen(true);
-    setNewTitle(item.title);
-    setNewMemo(item.memo);
-    setTargetNum(keynum);
+    setTargetItem(item);
   };
   const handleClose = () => {
     setOpen(false);
-    setOpenNewModal(false);
+    setIsNewModal(false);
   };
 
-  const editContents = (newTitle, newMemo, targetNum) => {
-    console.log(newTitle, newMemo);
-    const newlists = memoLists.map((item, index) =>
-      index === targetNum ? { ...item, title: newTitle, memo: newMemo } : item
+  const editContents = (targetItem) => {
+    console.log(targetItem);
+    const newlists = memoLists.map((item) =>
+      item.id === targetItem.id
+        ? { ...item, title: targetItem.title, memo: targetItem.memo }
+        : item
     );
     setMemoLists([...newlists]);
-
     handleClose();
   };
 
-  const creatNewMemo = () => {
-    console.log("clicked");
-    setOpenNewModal(true);
+  const handleCreatButtonClick = () => {
+    setTargetItem(defaultItem);
+    setIsNewModal(true);
     setOpen(true);
-    console.log(openNewModal);
+    console.log(targetItem);
   };
 
   const deleList = (keynum) => {
@@ -61,7 +59,11 @@ const Memo = () => {
       <div>
         <Container css={titleContainer}>
           <h1 css={appTitle}>Memo App</h1>
-          <Button variant="outlined" css={titleButton} onClick={creatNewMemo}>
+          <Button
+            variant="outlined"
+            css={titleButton}
+            onClick={handleCreatButtonClick}
+          >
             新規作成
           </Button>
         </Container>
@@ -82,17 +84,13 @@ const Memo = () => {
 
         <MemoModal
           open={open}
-          newTitle={newTitle}
-          newMemo={newMemo}
           handleClose={handleClose}
           editContents={editContents}
-          setNewTitle={setNewTitle}
-          setNewMemo={setNewMemo}
-          setOpenNewModal={setOpenNewModal}
-          targetNum={targetNum}
-          openNewModal={openNewModal}
+          IsNewModal={IsNewModal}
           memoLists={memoLists}
           setMemoLists={setMemoLists}
+          targetItem={targetItem}
+          setTargetItem={setTargetItem}
         ></MemoModal>
       </div>
     </>
