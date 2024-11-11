@@ -30,6 +30,7 @@ const MemoModal = ({
   setMemoLists,
   targetItem,
   setTargetItem,
+  getCatimg,
 }) => {
   const schema = yup.object().shape({
     date: yup.string().required("日付が必要です"),
@@ -54,19 +55,16 @@ const MemoModal = ({
       <Box css={modalBox}>
         <FormProvider {...useFormmethod}>
           <form action="" css={modalForm}>
-            {IsNewModal ? (
-              <CreatNewitem
-                handleClose={handleClose}
-                setMemoLists={setMemoLists}
-                memoLists={memoLists}
-              ></CreatNewitem>
-            ) : (
-              <Edititem
-                editContents={editContents}
-                targetItem={targetItem}
-                setTargetItem={setTargetItem}
-              ></Edititem>
-            )}
+            <CreatNewitem
+              handleClose={handleClose}
+              setMemoLists={setMemoLists}
+              memoLists={memoLists}
+              editContents={editContents}
+              targetItem={targetItem}
+              setTargetItem={setTargetItem}
+              IsNewModal={IsNewModal}
+              getCatimg={getCatimg}
+            ></CreatNewitem>
           </form>
         </FormProvider>
       </Box>
@@ -74,7 +72,16 @@ const MemoModal = ({
   );
 };
 
-const CreatNewitem = ({ handleClose, setMemoLists, memoLists }) => {
+const CreatNewitem = ({
+  handleClose,
+  setMemoLists,
+  memoLists,
+  editContents,
+  targetItem,
+  setTargetItem,
+  IsNewModal,
+  getCatimg,
+}) => {
   const {
     register,
     handleSubmit,
@@ -90,88 +97,91 @@ const CreatNewitem = ({ handleClose, setMemoLists, memoLists }) => {
     window.localStorage.setItem("memo", JSON.stringify([...memoLists, result]));
     console.log("out", data);
     handleClose();
+    getCatimg();
     reset();
   };
 
   return (
     <div css={formConatainer}>
-      <Controller
-        name="date"
-        control={control}
-        render={({ field }) => (
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <p css={errorStyle}>{errors.date?.message}</p>
-            <DatePicker
-              label="日付"
-              format="YYYY/MM/DD"
-              {...field}
-              renderLoading={() => <TextField {...register("date")} />}
-            />
-          </LocalizationProvider>
-        )}
-      />
-      <p css={errorStyle}>{errors.title?.message}</p>
-      <TextField
-        id="outlined-basic"
-        fullWidth
-        label="タイトル"
-        variant="outlined"
-        css={textfield}
-        {...register("title")}
-      />
-      <TextField
-        id="outlined-multiline-static"
-        label="メモ"
-        multiline
-        fullWidth
-        rows={8}
-        css={textfield}
-        {...register("memo")}
-      />
-      <Button
-        variant="outlined"
-        type="submit"
-        css={formButton}
-        onClick={handleSubmit(onSubmit)}
-      >
-        保存
-      </Button>
-    </div>
-  );
-};
+      {IsNewModal ? (
+        <>
+          <Controller
+            name="date"
+            control={control}
+            render={({ field }) => (
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <p css={errorStyle}>{errors.date?.message}</p>
+                <DatePicker
+                  label="日付"
+                  format="YYYY/MM/DD"
+                  {...field}
+                  renderLoading={() => <TextField {...register("date")} />}
+                />
+              </LocalizationProvider>
+            )}
+          />
+          <p css={errorStyle}>{errors.title?.message}</p>
+          <TextField
+            id="outlined-basic"
+            fullWidth
+            label="タイトル"
+            variant="outlined"
+            css={textfield}
+            {...register("title")}
+          />
+          <TextField
+            id="outlined-multiline-static"
+            label="メモ"
+            multiline
+            fullWidth
+            rows={8}
+            css={textfield}
+            {...register("memo")}
+          />
+          <Button
+            variant="outlined"
+            type="submit"
+            css={formButton}
+            onClick={handleSubmit(onSubmit)}
+          >
+            保存
+          </Button>
+        </>
+      ) : (
+        <>
+          <TextField
+            id="outlined-basic"
+            fullWidth
+            label="タイトル"
+            variant="outlined"
+            value={targetItem.title}
+            onChange={(e) =>
+              setTargetItem({ ...targetItem, title: e.target.value })
+            }
+            css={textfield}
+          />
 
-const Edititem = ({ editContents, targetItem, setTargetItem }) => {
-  return (
-    <div css={formConatainer}>
-      <TextField
-        id="outlined-basic"
-        fullWidth
-        label="タイトル"
-        variant="outlined"
-        value={targetItem.title}
-        onChange={(e) =>
-          setTargetItem({ ...targetItem, title: e.target.value })
-        }
-        css={textfield}
-      />
-
-      <TextField
-        id="outlined-multiline-static"
-        label="メモ"
-        multiline
-        fullWidth
-        rows={8}
-        value={targetItem.memo}
-        onChange={(e) => setTargetItem({ ...targetItem, memo: e.target.value })}
-        css={textfield}
-      />
-      <Button
-        variant="outlined"
-        onClick={() => editContents(targetItem)}
-        css={formButton}
-      >
-        変更
-      </Button>
+          <TextField
+            id="outlined-multiline-static"
+            label="メモ"
+            multiline
+            fullWidth
+            rows={8}
+            value={targetItem.memo}
+            onChange={(e) =>
+              setTargetItem({ ...targetItem, memo: e.target.value })
+            }
+            css={textfield}
+          />
+          <Button
+            variant="outlined"
+            onClick={() => editContents(targetItem)}
+            css={formButton}
+          >
+            変更
+          </Button>
+        </>
+      )}
     </div>
   );
 };
