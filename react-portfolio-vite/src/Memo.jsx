@@ -9,9 +9,11 @@ import MemoModal from "./MemoModal";
 import Cat from "./Cat";
 
 const fetchCat = async () => {
-  const url = `https://api.thecatapi.com/v1/images/search?limit=1&api_key=live_1TY1LTtnqm0jrtDiQhBntqDINzilwv7hnnWguQLtD1Epdj3DCmYNV66eU6qNiuHm`;
+  const url = `https://api.thecatapi.com/v1/images/search?limit=1&has_breeds&api_key=live_1TY1LTtnqm0jrtDiQhBntqDINzilwv7hnnWguQLtD1Epdj3DCmYNV66eU6qNiuHm`;
 
   const res = await fetch(url);
+  // const text = await res.text();
+  // console.log(text);
 
   if (res.ok) {
     // console.log(await res.json());
@@ -33,14 +35,16 @@ const Memo = () => {
   const [targetItem, setTargetItem] = React.useState(defaultItem);
   const [IsNewModal, setIsNewModal] = React.useState(false);
   // fetch state
-  const [catdata, setCatData] = React.useState(null);
+  const [catdata, setCatData] = React.useState();
   const [isLoading, setIsloading] = React.useState(false);
+
   const getCatimg = async () => {
     setIsloading(true);
     try {
       const d = await fetchCat();
-      setCatData(d);
-      console.log(catdata);
+      console.log(d[0]);
+
+      setCatData(d[0]);
     } catch (error) {
       console.log(error);
     } finally {

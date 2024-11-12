@@ -1,8 +1,8 @@
-const Cat = ({ catData, isLoading }) => {
+const Cat = ({ catdata, isLoading }) => {
   return (
     <div>
       {isLoading && <p>...loading</p>}
-      {!isLoading && console.log(catData)}
+      {!isLoading && <img src={catdata?.url}></img>}
     </div>
   );
 };
