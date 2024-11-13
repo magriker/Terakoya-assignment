@@ -3,7 +3,7 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
 import { Container } from "@mui/material";
-import { appTitle, titleButton, titleContainer } from "./Css";
+import { appTitle, titleButton, titleContainer, blurBg } from "./Css";
 import MemoItem from "./MemoItem";
 import MemoModal from "./MemoModal";
 import Cat from "./Cat";
@@ -88,7 +88,7 @@ const Memo = () => {
 
   return (
     <>
-      <div>
+      <div css={open ? blurBg : ""}>
         <Container css={titleContainer}>
           <h1 css={appTitle}>Memo App</h1>
           <Button
