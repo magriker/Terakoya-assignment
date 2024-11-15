@@ -7,6 +7,30 @@ import { appTitle, titleButton, titleContainer, blurBg } from "./Css";
 import MemoItem from "./MemoItem";
 import MemoModal from "./MemoModal";
 import Cat from "./Cat";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
+import interactionPlugin from "@fullcalendar/interaction";
+
+function Calendar() {
+  const handleDateClick = (arg) => {
+    alert(arg.dateStr);
+  };
+  return (
+    <FullCalendar
+      plugins={[dayGridPlugin, interactionPlugin]}
+      initialView="dayGridMonth"
+      events={[{ title: "event1", date: "2024-11-14" , }]}
+      dateClick={handleDateClick}
+      locale="ja"
+      headerToolbar={{
+        left: "prev,next",
+        center: "title",
+        right: "dayGridMonth,dayGridWeek,dayGridDay",
+      }}
+      eventClick={}
+    />
+  );
+}
 
 const fetchCat = async () => {
   const url = `https://api.thecatapi.com/v1/images/search?limit=1&has_breeds&api_key=live_1TY1LTtnqm0jrtDiQhBntqDINzilwv7hnnWguQLtD1Epdj3DCmYNV66eU6qNiuHm`;
@@ -116,6 +140,8 @@ const Memo = () => {
         <Container>
           <Cat catdata={catdata} isLoading={isLoading}></Cat>
         </Container>
+
+        <Calendar></Calendar>
 
         <MemoModal
           open={open}
