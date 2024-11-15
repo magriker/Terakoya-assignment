@@ -65,8 +65,9 @@ export const modalBox = css`
   left: 50%;
   transform: translate(-50%, -50%);
   width: 500px;
-  background-color: rgb(142, 153, 149);
+  background-color: rgb(226, 226, 226);
   border: 2px solid #000;
+  border-radius: 10px;
   box-shadow: 24;
   padding: 3rem;
 `;
@@ -75,4 +76,8 @@ export const modalForm = css`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+`;
+
+export const blurBg = css`
+  filter: blur(5px);
 `;

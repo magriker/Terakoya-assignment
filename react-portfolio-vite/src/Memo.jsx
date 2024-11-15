@@ -3,9 +3,49 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
 import { Container } from "@mui/material";
-import { appTitle, titleButton, titleContainer } from "./Css";
+import { appTitle, titleButton, titleContainer, blurBg } from "./Css";
 import MemoItem from "./MemoItem";
 import MemoModal from "./MemoModal";
+import Cat from "./Cat";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
+import interactionPlugin from "@fullcalendar/interaction";
+
+function Calendar() {
+  const handleDateClick = (arg) => {
+    alert(arg.dateStr);
+  };
+  return (
+    <FullCalendar
+      plugins={[dayGridPlugin, interactionPlugin]}
+      initialView="dayGridMonth"
+      events={[{ title: "event1", date: "2024-11-14" , }]}
+      dateClick={handleDateClick}
+      locale="ja"
+      headerToolbar={{
+        left: "prev,next",
+        center: "title",
+        right: "dayGridMonth,dayGridWeek,dayGridDay",
+      }}
+      eventClick={}
+    />
+  );
+}
+
+const fetchCat = async () => {
+  const url = `https://api.thecatapi.com/v1/images/search?limit=1&has_breeds&api_key=live_1TY1LTtnqm0jrtDiQhBntqDINzilwv7hnnWguQLtD1Epdj3DCmYNV66eU6qNiuHm`;
+
+  const res = await fetch(url);
+  // const text = await res.text();
+  // console.log(text);
+
+  if (res.ok) {
+    // console.log(await res.json());
+    return res.json();
+  }
+
+  throw new Error(res.statusText);
+};
 
 const Memo = () => {
   const memo = window.localStorage.getItem("memo");
@@ -18,6 +58,23 @@ const Memo = () => {
   // const [targetItem, setTargetItem] = React.useState();
   const [targetItem, setTargetItem] = React.useState(defaultItem);
   const [IsNewModal, setIsNewModal] = React.useState(false);
+  // fetch state
+  const [catdata, setCatData] = React.useState();
+  const [isLoading, setIsloading] = React.useState(false);
+
+  const getCatimg = async () => {
+    setIsloading(true);
+    try {
+      const d = await fetchCat();
+      console.log(d[0]);
+
+      setCatData(d[0]);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsloading(false);
+    }
+  };
 
   const handleOpen = (item) => {
     setOpen(true);
@@ -43,7 +100,6 @@ const Memo = () => {
     setTargetItem(defaultItem);
     setIsNewModal(true);
     setOpen(true);
-    console.log(targetItem);
   };
 
   const deleList = (keynum) => {
@@ -56,7 +112,7 @@ const Memo = () => {
 
   return (
     <>
-      <div>
+      <div css={open ? blurBg : ""}>
         <Container css={titleContainer}>
           <h1 css={appTitle}>Memo App</h1>
           <Button
@@ -81,6 +137,11 @@ const Memo = () => {
             />
           ))}
         </Container>
+        <Container>
+          <Cat catdata={catdata} isLoading={isLoading}></Cat>
+        </Container>
+
+        <Calendar></Calendar>
 
         <MemoModal
           open={open}
@@ -91,6 +152,7 @@ const Memo = () => {
           setMemoLists={setMemoLists}
           targetItem={targetItem}
           setTargetItem={setTargetItem}
+          getCatimg={getCatimg}
         ></MemoModal>
       </div>
     </>
