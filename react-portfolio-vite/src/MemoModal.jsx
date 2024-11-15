@@ -124,6 +124,7 @@ const CreatNewitem = ({
           <TextField
             id="outlined-basic"
             fullWidth
+            name="title"
             label="タイトル"
             variant="outlined"
             css={textfield}
@@ -132,6 +133,7 @@ const CreatNewitem = ({
           <TextField
             id="outlined-multiline-static"
             label="メモ"
+            name="memo"
             multiline
             fullWidth
             rows={8}
