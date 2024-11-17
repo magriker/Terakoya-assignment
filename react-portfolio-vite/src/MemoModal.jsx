@@ -10,16 +10,16 @@ import {
   textfield,
 } from "./Css";
 import {
-  Controller,
+  // Controller,
   FormProvider,
   useForm,
   useFormContext,
 } from "react-hook-form";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+// import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs from "dayjs";
+// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+// import dayjs from "dayjs";
 
 const MemoModal = ({
   open,
@@ -31,9 +31,9 @@ const MemoModal = ({
   targetItem,
   setTargetItem,
   getCatimg,
+  targetDate,
 }) => {
   const schema = yup.object().shape({
-    date: yup.string().required("日付が必要です"),
     title: yup.string().required("タイトルが必要です"),
     memo: yup.string(),
   });
@@ -56,6 +56,7 @@ const MemoModal = ({
         <FormProvider {...useFormmethod}>
           <form action="" css={modalForm}>
             <CreatNewitem
+              targetDate={targetDate}
               handleClose={handleClose}
               setMemoLists={setMemoLists}
               memoLists={memoLists}
@@ -80,24 +81,22 @@ const CreatNewitem = ({
   targetItem,
   setTargetItem,
   IsNewModal,
-  getCatimg,
+  targetDate,
 }) => {
   const {
     register,
     handleSubmit,
     reset,
-    control,
+    // control,
     formState: { errors },
   } = useFormContext();
 
   const onSubmit = (data) => {
-    const dateString = dayjs(data.date).format("YYYY-MM-DD");
-    const result = { ...data, date: dateString, id: uuid() };
+    const result = { ...data, date: targetDate, id: uuid() };
     setMemoLists([...memoLists, result]);
     window.localStorage.setItem("memo", JSON.stringify([...memoLists, result]));
     console.log("out", data);
     handleClose();
-    getCatimg();
     reset();
   };
 
@@ -105,7 +104,7 @@ const CreatNewitem = ({
     <div css={formConatainer}>
       {IsNewModal ? (
         <>
-          <Controller
+          {/* <Controller
             name="date"
             control={control}
             render={({ field }) => (
@@ -119,11 +118,13 @@ const CreatNewitem = ({
                 />
               </LocalizationProvider>
             )}
-          />
+          /> */}
+          <p>日付：{targetDate}</p>
           <p css={errorStyle}>{errors.title?.message}</p>
           <TextField
             id="outlined-basic"
             fullWidth
+            name="title"
             label="タイトル"
             variant="outlined"
             css={textfield}
@@ -132,6 +133,7 @@ const CreatNewitem = ({
           <TextField
             id="outlined-multiline-static"
             label="メモ"
+            name="memo"
             multiline
             fullWidth
             rows={8}
