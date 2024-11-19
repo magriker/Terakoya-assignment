@@ -2,7 +2,12 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import interactionPlugin from "@fullcalendar/interaction";
 
-const Calendar = ({ memoLists, handleCreatButtonClick, setTargetDate }) => {
+const Calendar = ({
+  memoLists,
+  handleCreatButtonClick,
+  setTargetDate,
+  handleOpen,
+}) => {
   const handleDateClick = (arg) => {
     handleCreatButtonClick();
     setTargetDate(arg.dateStr);
@@ -10,7 +15,11 @@ const Calendar = ({ memoLists, handleCreatButtonClick, setTargetDate }) => {
   };
 
   const handleEventClick = (arg) => {
-    console.log(arg.event);
+    console.log(arg.event.id);
+    console.log(memoLists);
+
+    const targetItem = memoLists.find((item) => item.id === arg.event.id);
+    handleOpen(targetItem);
   };
   return (
     <FullCalendar

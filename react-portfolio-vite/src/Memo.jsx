@@ -89,6 +89,7 @@ const Memo = () => {
           memoLists={memoLists}
           handleCreatButtonClick={handleCreatButtonClick}
           setTargetDate={setTargetDate}
+          handleOpen={handleOpen}
         ></Calendar>
 
         <MemoModal
