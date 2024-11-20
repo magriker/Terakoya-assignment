@@ -1,10 +1,8 @@
 /** @jsxImportSource @emotion/react */
 
 import * as React from "react";
-import Button from "@mui/material/Button";
 import { Container } from "@mui/material";
-import { appTitle, titleButton, titleContainer, blurBg } from "./Css";
-import MemoItem from "./MemoItem";
+import { appTitle, titleContainer, blurBg } from "./Css";
 import MemoModal from "./MemoModal";
 import Calendar from "./Calendar.jsx";
 
@@ -49,12 +47,13 @@ const Memo = () => {
     setOpen(true);
   };
 
-  const deleList = (keynum) => {
-    console.log(keynum);
+  const deleList = (targetItem) => {
+    console.log(targetItem);
     console.log("clicked");
-    const data = memoLists.filter((_, index) => index !== keynum);
-    setMemoLists(data);
-    window.localStorage.setItem("memo", JSON.stringify([...data]));
+    const newItemlists = memoLists.filter((item) => item.id !== targetItem.id);
+    setMemoLists(newItemlists);
+    window.localStorage.setItem("memo", JSON.stringify([...newItemlists]));
+    handleClose();
   };
 
   return (
@@ -62,36 +61,15 @@ const Memo = () => {
       <div css={open ? blurBg : ""}>
         <Container css={titleContainer}>
           <h1 css={appTitle}>Memo App</h1>
-          <Button
-            variant="outlined"
-            css={titleButton}
-            onClick={handleCreatButtonClick}
-          >
-            新規作成
-          </Button>
         </Container>
         <Container>
-          {memoLists.map((item, index) => (
-            <MemoItem
-              item={item}
-              key={index}
-              keynum={index}
-              deleList={deleList}
-              editContents={editContents}
-              handleOpen={handleOpen}
-              handleClose={handleClose}
-              open={open}
-            />
-          ))}
+          <Calendar
+            memoLists={memoLists}
+            handleCreatButtonClick={handleCreatButtonClick}
+            setTargetDate={setTargetDate}
+            handleOpen={handleOpen}
+          ></Calendar>
         </Container>
-
-        <Calendar
-          memoLists={memoLists}
-          handleCreatButtonClick={handleCreatButtonClick}
-          setTargetDate={setTargetDate}
-          handleOpen={handleOpen}
-        ></Calendar>
-
         <MemoModal
           open={open}
           handleClose={handleClose}
@@ -102,6 +80,7 @@ const Memo = () => {
           targetItem={targetItem}
           setTargetItem={setTargetItem}
           targetDate={targetDate}
+          deleList={deleList}
         ></MemoModal>
       </div>
     </>

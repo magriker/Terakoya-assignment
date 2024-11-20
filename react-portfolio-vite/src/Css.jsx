@@ -81,3 +81,9 @@ export const modalForm = css`
 export const blurBg = css`
   filter: blur(5px);
 `;
+
+export const buttonBox = css`
+  display: flex;
+  justify-content: end;
+  gap: 1rem;
+`;
