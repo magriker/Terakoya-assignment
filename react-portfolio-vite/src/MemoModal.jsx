@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { v4 as uuid } from "uuid";
 import { Box, Button, Modal, TextField } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { buttonBox } from "./Css";
 import {
   errorStyle,
   formButton,
@@ -32,6 +34,7 @@ const MemoModal = ({
   setTargetItem,
   getCatimg,
   targetDate,
+  deleList,
 }) => {
   const schema = yup.object().shape({
     title: yup.string().required("タイトルが必要です"),
@@ -65,6 +68,7 @@ const MemoModal = ({
               setTargetItem={setTargetItem}
               IsNewModal={IsNewModal}
               getCatimg={getCatimg}
+              deleList={deleList}
             ></CreatNewitem>
           </form>
         </FormProvider>
@@ -82,6 +86,7 @@ const CreatNewitem = ({
   setTargetItem,
   IsNewModal,
   targetDate,
+  deleList,
 }) => {
   const {
     register,
@@ -104,21 +109,6 @@ const CreatNewitem = ({
     <div css={formConatainer}>
       {IsNewModal ? (
         <>
-          {/* <Controller
-            name="date"
-            control={control}
-            render={({ field }) => (
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <p css={errorStyle}>{errors.date?.message}</p>
-                <DatePicker
-                  label="日付"
-                  format="YYYY/MM/DD"
-                  {...field}
-                  renderLoading={() => <TextField {...register("date")} />}
-                />
-              </LocalizationProvider>
-            )}
-          /> */}
           <p>日付：{targetDate}</p>
           <p css={errorStyle}>{errors.title?.message}</p>
           <TextField
@@ -175,13 +165,23 @@ const CreatNewitem = ({
             }
             css={textfield}
           />
-          <Button
-            variant="outlined"
-            onClick={() => editContents(targetItem)}
-            css={formButton}
-          >
-            変更
-          </Button>
+          <div css={buttonBox}>
+            <Button
+              variant="outlined"
+              css={formButton}
+              onClick={() => deleList(targetItem)}
+            >
+              <DeleteIcon />
+              削除
+            </Button>
+            <Button
+              variant="contained"
+              onClick={() => editContents(targetItem)}
+              css={formButton}
+            >
+              変更
+            </Button>
+          </div>
         </>
       )}
     </div>

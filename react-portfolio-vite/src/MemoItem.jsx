@@ -21,7 +21,7 @@ const MemoItem = ({ item, keynum, deleList, handleOpen }) => {
           <Button
             variant="contained"
             css={listButton}
-            onClick={() => handleOpen(item, keynum)}
+            onClick={() => handleOpen(item)}
           >
             <EditNoteIcon />
             編集
